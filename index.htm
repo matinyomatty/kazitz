@@ -3,85 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kazi TZ | The Career Coach</title>
+    <title>Kazi TZ | Pro Matcher</title>
     <style>
-        :root { --primary: #059669; --bg: #F8FAFC; --text: #0F172A; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; }
-        .card { background: #fff; padding: 2rem; border-radius: 24px; border: 1px solid #E2E8F0; max-width: 500px; margin: auto; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        :root { --primary: #059669; --bg: #F8FAFC; --text: #1E293B; }
+        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 15px; }
+        .card { background: #fff; padding: 24px; border-radius: 24px; border: 1px solid #E2E8F0; max-width: 450px; margin: auto; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
         
-        /* Pulse Animation for Progress */
-        .loading-bar { height: 4px; width: 100%; background: #E2E8F0; border-radius: 10px; overflow: hidden; margin: 20px 0; display: none; }
-        .loading-progress { height: 100%; background: var(--primary); width: 30%; animation: slide 2s infinite linear; }
-        @keyframes slide { from { margin-left: -30%; } to { margin-left: 100%; } }
+        .upload-zone { border: 2px dashed #CBD5E1; padding: 30px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.2s; background: #F9FAFB; }
+        .upload-zone:hover { border-color: var(--primary); background: #F0FDF4; }
 
-        /* Guidance Section (The "How-To" land the job) */
-        .coach-box { background: #F0F9FF; border-left: 4px solid #0EA5E9; padding: 1rem; border-radius: 8px; margin-top: 1.5rem; display: none; }
-        .coach-box h4 { margin: 0 0 8px 0; color: #0369A1; font-size: 0.9rem; text-transform: uppercase; }
-        .coach-list { font-size: 0.85rem; color: #0C4A6E; padding-left: 1.2rem; margin: 0; }
+        .advice-card { background: #F0F9FF; border-left: 4px solid #0EA5E9; padding: 15px; border-radius: 12px; margin-top: 20px; }
+        .advice-card h4 { margin: 0 0 10px 0; color: #0369A1; font-size: 0.85rem; text-transform: uppercase; }
+        .advice-list { font-size: 0.85rem; color: #0C4A6E; padding-left: 1.2rem; margin: 0; line-height: 1.5; }
 
-        .upload-btn { display: block; width: 100%; padding: 1.5rem; border: 2px dashed #CBD5E1; border-radius: 16px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .upload-btn:hover { border-color: var(--primary); background: #F0FDF4; }
+        .job-item { background: white; border: 1px solid #E2E8F0; padding: 15px; border-radius: 16px; margin-top: 15px; position: relative; }
+        .match-score { font-size: 0.7rem; font-weight: 800; background: #DCFCE7; color: #166534; padding: 4px 10px; border-radius: 20px; position: absolute; top: 15px; right: 15px; }
         
-        .result-item { background: white; border: 1px solid #E2E8F0; padding: 1.2rem; border-radius: 16px; margin-top: 1rem; }
-        .match-tag { font-size: 0.7rem; font-weight: 800; background: #DCFCE7; color: #166534; padding: 4px 8px; border-radius: 10px; }
+        /* THE FIX: Enhanced Button */
+        .btn-apply { display: block; text-align: center; background: var(--primary); color: #fff; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 700; margin-top: 15px; box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.2); transition: 0.2s; }
+        .btn-apply:active { transform: scale(0.97); background: #047857; }
+
+        #loader { display: none; text-align: center; padding: 20px; font-weight: 700; color: var(--primary); }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2 style="letter-spacing: -0.5px;">Guided Job Matcher</h2>
-    <p style="font-size: 0.85rem; color: #64748B; margin-bottom: 1.5rem;">Upload your CV. We find the jobs and tell you how to land them.</p>
+    <h2 style="margin-bottom: 5px; letter-spacing: -0.5px;">Guided Job Matcher</h2>
+    <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 20px;">Your CV is audited first to ensure a perfect match.</p>
 
-    <div class="upload-btn" id="dropArea" onclick="document.getElementById('cvFile').click()">
-        <span style="font-size: 2rem;">🚀</span>
-        <p style="font-weight: 700; margin-top: 10px;">Drop CV here to begin</p>
-        <input type="file" id="cvFile" hidden accept=".pdf,.doc,.docx" onchange="processCareer(this.files[0])">
+    <div class="upload-zone" onclick="document.getElementById('cvIn').click()">
+        <span style="font-size: 2rem;">📄</span>
+        <p style="font-weight: 700; margin-top: 10px;">Upload CV to Begin</p>
+        <input type="file" id="cvIn" hidden accept=".pdf,.doc,.docx" onchange="startMatching(this.files[0])">
     </div>
 
-    <div class="loading-bar" id="loader"><div class="loading-progress"></div></div>
+    <div id="loader">⚡ AI is generating your custom roadmap...</div>
 
-    <div class="coach-box" id="guidance">
-        <h4>💡 Immediate CV Fixes</h4>
-        <ul class="coach-list" id="adviceList">
-            </ul>
-    </div>
-
-    <div id="jobResults"></div>
+    <div id="output"></div>
 </div>
 
 <script>
-    async function processCareer(file) {
-        if(!file) return;
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('guidance').style.display = 'block';
-        document.getElementById('adviceList').innerHTML = "<li>Analyzing your experience profile...</li>";
-
-        // Logic Step 1: AI Instant Audit (Before searching the web)
-        // This solves your problem of candidates having "no guidance"
-        setTimeout(() => {
-            document.getElementById('adviceList').innerHTML = `
-                <li><strong>Format:</strong> Your current layout is hard for Tanzanian NGO systems to read. Use a single-column layout.</li>
-                <li><strong>Keywords:</strong> You are missing "Stakeholder Management" which is high-demand right now.</li>
-                <li><strong>Metrics:</strong> Quantify your results (e.g., "Improved efficiency by 20%").</li>
-            `;
-            // Logic Step 2: Now perform the live board search
-            findLiveJobs();
-        }, 2000);
+    // This function now uses Deep Search Links to ensure links always work
+    function openJob(role, company) {
+        const query = encodeURIComponent(`${role} vacancy ${company} Tanzania 2026`);
+        const url = `https://www.google.com/search?q=${query}&ibp=htl;jobs`;
+        window.open(url, '_blank', 'noopener,noreferrer');
     }
 
-    function findLiveJobs() {
-        // This is where the live search happens. 
-        // If it hits a "Speed Limit", we show the user the guidance first so they don't leave.
-        const results = document.getElementById('jobResults');
-        results.innerHTML = `
-            <div class="result-item">
-                <span class="match-tag">92% Match</span>
-                <h4 style="margin: 5px 0;">Project Manager (Health)</h4>
-                <p style="font-size: 0.8rem; color: #64748B;">UNICEF - Dar es Salaam</p>
-                <a href="#" style="color:var(--primary); font-size: 0.85rem; font-weight: 700;">View & Apply →</a>
-            </div>
-        `;
-        document.getElementById('loader').style.display = 'none';
+    async function startMatching(file) {
+        if(!file) return;
+        document.getElementById('loader').style.display = 'block';
+        document.getElementById('output').innerHTML = '';
+
+        // Simulate AI Audit & Search
+        setTimeout(() => {
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('output').innerHTML = `
+                <div class="advice-card">
+                    <h4>💡 Immediate CV Fixes</h4>
+                    <ul class="advice-list">
+                        <li><strong>Layout:</strong> Switch to a single-column PDF for NGO ATS scanners.</li>
+                        <li><strong>Missing Skill:</strong> Add "Data-Driven Reporting" to your summary.</li>
+                        <li><strong>Metrics:</strong> State how many staff or projects you managed.</li>
+                    </ul>
+                </div>
+
+                <div class="job-item">
+                    <span class="match-score">94% Match</span>
+                    <h4 style="margin: 0;">Project Manager (Health)</h4>
+                    <p style="font-size: 0.8rem; color: #64748B; margin: 4px 0 10px 0;">UNICEF • Dar es Salaam</p>
+                    <button class="btn-apply" onclick="openJob('Project Manager Health', 'UNICEF')">View Vacancy & Apply →</button>
+                </div>
+            `;
+        }, 2000);
     }
 </script>
 
