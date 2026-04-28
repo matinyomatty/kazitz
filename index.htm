@@ -3,178 +3,170 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Kazi TZ — Professional AI Job Intelligence</title>
+    <title>Kazi TZ — Executive Job Intelligence</title>
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
     <style>
         :root {
-            --ink: #0D1117; --ink2: #3D4451; --ink3: #7A8190;
-            --paper: #F8F6F1; --paper2: #EEEAE0; --paper3: #E2DDD3;
-            --green: #1A7A4A; --green-light: #D6EDE2; --green-mid: #A8D4BB;
+            --brand: #1A7A4A;
+            --brand-dark: #125232;
+            --brand-light: #E9F5EF;
+            --bg: #F9FAFB;
             --surface: #FFFFFF;
-            --r-lg: 18px; --r-xl: 28px;
-            --shadow-lg: 0 8px 32px rgba(13,17,23,0.12);
-            --font-display: 'Playfair Display', Georgia, serif;
-            --font-body: 'Outfit', system-ui, sans-serif;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --radius: 16px;
+            --shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
         }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: var(--font-body); background: var(--paper); color: var(--ink); min-height: 100vh; line-height: 1.6; }
-        
-        .header { background: var(--surface); border-bottom: 1px solid var(--paper3); position: sticky; top: 0; z-index: 100; }
-        .header-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; height: 62px; }
-        .logo { font-family: var(--font-display); font-size: 24px; color: var(--ink); text-decoration: none; font-weight: 700; }
-        .logo em { font-style: italic; color: var(--green); }
-        
-        .hero { background: var(--surface); border-bottom: 2px solid var(--paper3); padding: 4rem 1.5rem; text-align: center; }
-        .search-panel { max-width: 800px; margin: 0 auto; background: var(--surface); padding: 2.5rem; border-radius: var(--r-xl); box-shadow: var(--shadow-lg); border: 1px solid var(--paper3); }
-        
-        .search-wrap { display: flex; gap: 12px; margin-bottom: 1.5rem; }
-        .search-input { flex: 1; height: 60px; padding: 0 24px; border: 2px solid var(--paper3); border-radius: var(--r-lg); font-size: 16px; font-family: var(--font-body); transition: 0.2s; }
-        .search-input:focus { outline: none; border-color: var(--green); background: #fff; }
-        .search-btn { height: 60px; padding: 0 32px; border-radius: var(--r-lg); border: none; background: var(--green); color: #fff; font-weight: 600; cursor: pointer; font-size: 16px; }
-        .search-btn:hover { opacity: 0.9; }
 
-        .drop-zone { border: 2px dashed var(--paper3); border-radius: var(--r-xl); padding: 3rem; text-align: center; cursor: pointer; background: var(--paper); transition: 0.2s; }
-        .drop-zone:hover { border-color: var(--green); background: var(--green-light); }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text-main); line-height: 1.5; }
+
+        .nav { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 100; }
+        .logo { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--text-main); text-decoration: none; }
+        .logo span { color: var(--brand); font-style: italic; }
+
+        .container { max-width: 1000px; margin: 3rem auto; padding: 0 1.5rem; }
+
+        .header-section { text-align: center; margin-bottom: 3rem; }
+        .header-section h1 { font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 0.5rem; }
+        .header-section p { color: var(--text-muted); font-size: 16px; }
+
+        /* The Two-Option Grid */
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 3rem; }
+        @media (max-width: 768px) { .options-grid { grid-template-columns: 1fr; } }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); transition: transform 0.2s; position: relative; overflow: hidden; }
+        .card:hover { transform: translateY(-4px); border-color: var(--brand); }
+        .card h2 { font-size: 18px; margin-bottom: 1rem; display: flex; align-items: center; gap: 10px; }
         
-        .ai-status { display: none; padding: 3rem; text-align: center; }
-        .spinner { width: 44px; height: 44px; border: 4px solid var(--paper3); border-top-color: var(--green); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
+        /* Option A: Search Input */
+        .search-group { display: flex; flex-direction: column; gap: 12px; }
+        .input-field { width: 100%; padding: 14px 18px; border: 1.5px solid var(--border); border-radius: 12px; font-size: 15px; font-family: inherit; transition: 0.2s; }
+        .input-field:focus { outline: none; border-color: var(--brand); ring: 2px solid var(--brand-light); }
+        .btn-primary { background: var(--brand); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-primary:hover { background: var(--brand-dark); }
+
+        /* Option B: CV Upload */
+        .upload-zone { border: 2px dashed var(--border); border-radius: 12px; padding: 2rem; text-align: center; cursor: pointer; transition: 0.2s; background: var(--bg); }
+        .upload-zone:hover { border-color: var(--brand); background: var(--brand-light); }
+        .upload-zone p { font-size: 14px; color: var(--text-muted); margin-top: 8px; }
+
+        /* Status & Results */
+        .status-area { display: none; text-align: center; padding: 2rem; }
+        .loader { width: 30px; height: 30px; border: 3px solid var(--brand-light); border-top-color: var(--brand); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 15px; }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .job-card { background: var(--surface); border: 1px solid var(--paper3); border-radius: var(--r-lg); padding: 1.5rem; margin-bottom: 1.25rem; text-align: left; animation: slideUp 0.4s ease-out; }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        
-        .apply-btn { background: var(--green); color: #fff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: 600; display: inline-block; margin-top: 15px; font-size: 14px; }
-        
-        .badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: 600; text-transform: uppercase; margin-bottom: 8px; background: var(--green-light); color: var(--green); }
+        .results-grid { display: grid; gap: 1.5rem; }
+        .job-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.5rem; transition: 0.2s; }
+        .job-card:hover { box-shadow: var(--shadow); }
+        .job-card h3 { font-size: 18px; margin-bottom: 4px; }
+        .job-card .meta { font-size: 14px; color: var(--brand); font-weight: 600; margin-bottom: 12px; }
+        .job-card .desc { font-size: 14px; color: var(--text-muted); margin-bottom: 16px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .apply-link { text-decoration: none; color: var(--brand); font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 5px; }
     </style>
 </head>
 <body>
 
-<header class="header">
-    <div class="header-inner">
-        <a class="logo" href="#">Kazi <em>TZ</em></a>
-        <div style="flex:1"></div>
-        <div style="font-size:12px; color:var(--ink3);">Professional Job Search 🇹🇿</div>
-    </div>
-</header>
+<nav class="nav">
+    <a href="#" class="logo">Kazi <span>TZ</span></a>
+    <div style="font-size: 12px; font-weight: 600; color: var(--text-muted);">LIVE SCANNER 🇹🇿</div>
+</nav>
 
-<section class="hero">
-    <div class="search-panel">
-        <h1 style="margin-bottom:1.5rem; font-family:var(--font-display); font-size: clamp(28px, 5vw, 42px);">Professional <em>Job Matching</em></h1>
-        
-        <div class="search-wrap">
-            <input class="search-input" id="mainSearch" type="text" placeholder="What role are you looking for?"/>
-            <button class="search-btn" onclick="triggerSearch()">Find Jobs</button>
+<main class="container">
+    <div class="header-section">
+        <h1>Find Your Next Move</h1>
+        <p>Real-time opportunities from Tanzania's top employers</p>
+    </div>
+
+    <div class="options-grid">
+        <div class="card">
+            <h2><span>🔍</span> Search by Role</h2>
+            <div class="search-group">
+                <input type="text" id="roleInput" class="input-field" placeholder="e.g. Project Manager, Accountant..."/>
+                <button class="btn-primary" onclick="searchByRole()">Scan Job Boards</button>
+            </div>
         </div>
 
-        <div class="drop-zone" id="dropZone" onclick="document.getElementById('cvInput').click()">
-            <div style="font-size:32px; margin-bottom:10px;">📄</div>
-            <p style="font-size:18px; font-weight:600;">Match My Experience</p>
-            <p style="font-size:14px; color:var(--ink3);">Upload your CV (PDF or Text) for instant matching</p>
-            <input type="file" id="cvInput" accept=".pdf,.doc,.docx,.txt" style="display:none;" onchange="handleFileUpload(this.files[0])"/>
+        <div class="card">
+            <h2><span>📄</span> Match My CV</h2>
+            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
+                <strong>Upload Resume</strong>
+                <p>PDF or Word (max 5MB)</p>
+                <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx,.txt" onchange="searchByFile(this.files[0])"/>
+            </div>
         </div>
     </div>
-</section>
 
-<div class="ai-status" id="aiStatus">
-    <div class="spinner"></div>
-    <div id="statusMsg" style="font-weight:600; font-size:18px;">Scanning live job boards...</div>
-    <p style="color:var(--ink3); font-size:14px; margin-top:5px;">This takes about 10 seconds</p>
-</div>
+    <div class="status-area" id="statusArea">
+        <div class="loader"></div>
+        <p id="statusMsg" style="font-weight: 600;">Consulting AI Intelligence...</p>
+    </div>
 
-<div id="jobsList" style="max-width:800px; margin: 0 auto 4rem; padding: 0 1.5rem;"></div>
+    <div id="resultsArea" class="results-grid"></div>
+</main>
 
 <script>
-    const ACCESS_KEY = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
+    const API_KEY = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
 
-    async function handleFileUpload(file) {
+    async function searchByRole() {
+        const query = document.getElementById('roleInput').value;
+        if (!query) return;
+        await runQuery(`Find 8 active job vacancies in Tanzania for "${query}".`);
+    }
+
+    async function searchByFile(file) {
         if (!file) return;
-        
-        document.getElementById('aiStatus').style.display = 'block';
-        document.getElementById('statusMsg').textContent = "Analyzing document intelligence...";
-        document.getElementById('jobsList').innerHTML = '';
-
         const reader = new FileReader();
         reader.onload = async () => {
-            const base64Content = reader.result.split(',')[1];
-            await runSmartQuery(null, base64Content, file.type);
+            const base64 = reader.result.split(',')[1];
+            await runQuery("Identify the candidate's profession from this CV and find 8 matching open jobs in Tanzania.", base64, file.type);
         };
         reader.readAsDataURL(file);
     }
 
-    async function triggerSearch() {
-        const q = document.getElementById('mainSearch').value;
-        if(!q) return;
-        await runSmartQuery(q);
-    }
-
-    async function runSmartQuery(query, fileBase64 = null, mimeType = null) {
-        document.getElementById('aiStatus').style.display = 'block';
-        const list = document.getElementById('jobsList');
-        list.innerHTML = '';
-
-        // Intelligent Prompt Construction
-        const textPrompt = fileBase64 
-            ? "Analyze the attached document/CV. Identify the candidate's core skills and experience. Then, find 10 CURRENTLY OPEN job vacancies in Tanzania that match this profile perfectly. Return only a JSON array of objects with title, company, location, summary, and url."
-            : `Search for 10 currently active and open job vacancies in Tanzania for the role: ${query}. Ensure links are direct to the job board. Return only a JSON array of objects with title, company, location, summary, and url.`;
+    async function runQuery(promptText, base64 = null, mime = null) {
+        const status = document.getElementById('statusArea');
+        const results = document.getElementById('resultsArea');
+        status.style.display = 'block';
+        results.innerHTML = '';
 
         const payload = {
             contents: [{
                 parts: [
-                    { text: textPrompt },
-                    fileBase64 ? { inline_data: { mime_type: mimeType, data: fileBase64 } } : null
+                    { text: promptText + " Return ONLY a JSON array of objects with keys: title, company, location, summary, url. Be specific to Tanzania." },
+                    base64 ? { inline_data: { mime_type: mime, data: base64 } } : null
                 ].filter(Boolean)
             }],
             tools: [{ googleSearch: {} }],
-            generationConfig: { 
-                response_mime_type: "application/json",
-                temperature: 0.2
-            }
+            generationConfig: { response_mime_type: "application/json", temperature: 0.1 }
         };
 
         try {
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${ACCESS_KEY}`, {
+            const resp = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            if (response.status === 429) {
-                document.getElementById('statusMsg').textContent = "System busy. Retrying automatically...";
-                setTimeout(() => runSmartQuery(query, fileBase64, mimeType), 4000);
-                return;
-            }
-
-            const data = await response.json();
-            const rawText = data.candidates[0].content.parts[0].text;
-            const jobs = JSON.parse(rawText);
+            const data = await resp.json();
+            const jobs = JSON.parse(data.candidates[0].content.parts[0].text);
             
-            list.innerHTML = jobs.map(j => `
+            results.innerHTML = jobs.map(j => `
                 <div class="job-card">
-                    <span class="badge">Live Match</span>
-                    <h3 style="font-family:var(--font-display); font-size:20px;">${j.title || j.job_title}</h3>
-                    <p style="color:var(--green); font-weight:600; font-size:14px;">${j.company || j.organization} • ${j.location || 'Tanzania'}</p>
-                    <p style="font-size:14px; margin:12px 0; color:var(--ink2); line-height:1.7;">${j.summary || j.description}</p>
-                    <a href="${j.url || j.link}" target="_blank" class="apply-btn">View Full Vacancy →</a>
+                    <h3>${j.title}</h3>
+                    <div class="meta">${j.company} • ${j.location}</div>
+                    <p class="desc">${j.summary}</p>
+                    <a href="${j.url}" target="_blank" class="apply-link">Apply on Source →</a>
                 </div>
             `).join('');
-
-            // Scroll to results
-            window.scrollTo({ top: document.getElementById('aiStatus').offsetTop - 20, behavior: 'smooth' });
-
         } catch (e) {
-            console.error("AI Error:", e);
-            list.innerHTML = `<div style="text-align:center; padding:2rem; color:var(--red);">Unable to fetch live data. Please try again in a moment.</div>`;
+            results.innerHTML = `<p style="text-align:center; color:red;">Connection timed out. Please try again.</p>`;
         } finally {
-            document.getElementById('aiStatus').style.display = 'none';
+            status.style.display = 'none';
         }
     }
-
-    // Support for Enter Key
-    document.getElementById('mainSearch').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') triggerSearch();
-    });
 </script>
 </body>
 </html>
