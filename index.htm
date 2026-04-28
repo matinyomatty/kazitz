@@ -3,80 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kazi TZ | Pro Matcher</title>
+    <title>Kazi TZ | Live 2026 Portal</title>
     <style>
-        :root { --primary: #059669; --bg: #F8FAFC; --text: #1E293B; }
-        body { font-family: -apple-system, system-ui, sans-serif; background: var(--bg); color: var(--text); padding: 15px; }
-        .card { background: #fff; padding: 24px; border-radius: 24px; border: 1px solid #E2E8F0; max-width: 450px; margin: auto; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        :root { --primary: #059669; --bg: #F8FAFC; --card: #FFFFFF; --text: #111827; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, system-ui, sans-serif; }
+        body { background: var(--bg); color: var(--text); padding: 15px; }
+        .card { background: #fff; padding: 20px; border-radius: 20px; border: 1px solid #E5E7EB; max-width: 450px; margin: auto; }
         
-        .upload-zone { border: 2px dashed #CBD5E1; padding: 30px; border-radius: 20px; text-align: center; cursor: pointer; transition: 0.2s; background: #F9FAFB; }
-        .upload-zone:hover { border-color: var(--primary); background: #F0FDF4; }
+        /* Live Indicator */
+        .live-status { display: flex; align-items: center; gap: 8px; font-size: 0.7rem; font-weight: 800; color: #DC2626; margin-bottom: 15px; text-transform: uppercase; }
+        .pulse { width: 8px; height: 8px; background: #DC2626; border-radius: 50%; animation: blink 1.5s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-        .advice-card { background: #F0F9FF; border-left: 4px solid #0EA5E9; padding: 15px; border-radius: 12px; margin-top: 20px; }
-        .advice-card h4 { margin: 0 0 10px 0; color: #0369A1; font-size: 0.85rem; text-transform: uppercase; }
-        .advice-list { font-size: 0.85rem; color: #0C4A6E; padding-left: 1.2rem; margin: 0; line-height: 1.5; }
+        .sector-links { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .s-btn { padding: 12px; border-radius: 12px; border: 1.5px solid #E5E7EB; background: #fff; cursor: pointer; font-size: 0.8rem; font-weight: 700; text-align: center; }
+        .s-btn:active { background: #F0FDF4; border-color: var(--primary); }
 
-        .job-item { background: white; border: 1px solid #E2E8F0; padding: 15px; border-radius: 16px; margin-top: 15px; position: relative; }
-        .match-score { font-size: 0.7rem; font-weight: 800; background: #DCFCE7; color: #166534; padding: 4px 10px; border-radius: 20px; position: absolute; top: 15px; right: 15px; }
+        .job-card { background: #fff; border: 1px solid #E5E7EB; padding: 16px; border-radius: 16px; margin-top: 12px; }
+        .deadline { font-size: 0.7rem; font-weight: 800; color: #9A3412; background: #FFEDD5; padding: 3px 8px; border-radius: 10px; display: inline-block; margin-bottom: 8px; }
         
-        /* THE FIX: Enhanced Button */
-        .btn-apply { display: block; text-align: center; background: var(--primary); color: #fff; text-decoration: none; padding: 14px; border-radius: 12px; font-weight: 700; margin-top: 15px; box-shadow: 0 4px 6px -1px rgba(5, 150, 105, 0.2); transition: 0.2s; }
-        .btn-apply:active { transform: scale(0.97); background: #047857; }
-
-        #loader { display: none; text-align: center; padding: 20px; font-weight: 700; color: var(--primary); }
+        .btn-live { display: block; text-align: center; background: var(--primary); color: #fff; text-decoration: none; padding: 12px; border-radius: 10px; font-weight: 700; font-size: 0.85rem; margin-top: 12px; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2 style="margin-bottom: 5px; letter-spacing: -0.5px;">Guided Job Matcher</h2>
-    <p style="font-size: 0.8rem; color: #64748B; margin-bottom: 20px;">Your CV is audited first to ensure a perfect match.</p>
+    <div class="live-status"><div class="pulse"></div> Live Vacancies: April 29, 2026</div>
+    <h2 style="font-size: 1.2rem; margin-bottom: 15px;">Target Verified Roles</h2>
 
-    <div class="upload-zone" onclick="document.getElementById('cvIn').click()">
-        <span style="font-size: 2rem;">📄</span>
-        <p style="font-weight: 700; margin-top: 10px;">Upload CV to Begin</p>
-        <input type="file" id="cvIn" hidden accept=".pdf,.doc,.docx" onchange="startMatching(this.files[0])">
+    <div class="sector-links">
+        <div class="s-btn" onclick="openPortal('unicef')">🇺🇳 UNICEF Ops</div>
+        <div class="s-btn" onclick="openPortal('health')">🏥 Health Sect</div>
+        <div class="s-btn" onclick="openPortal('ngo')">🌍 NGO Boards</div>
+        <div class="s-btn" onclick="openPortal('banking')">💰 Banking</div>
     </div>
 
-    <div id="loader">⚡ AI is generating your custom roadmap...</div>
+    <div id="latestJobs">
+        <div class="job-card">
+            <span class="deadline">Active: Closes May 8, 2026</span>
+            <h4 style="margin: 0;">Global Fund Health Consultant</h4>
+            <p style="font-size: 0.75rem; color: #64748B; margin: 4px 0;">UNICEF • Dar es Salaam (Integrated HIV/TB)</p>
+            <a href="https://jobs.unicef.org/en-us/filter/?search-keyword=Tanzania" target="_blank" class="btn-live">Apply via Official Portal →</a>
+        </div>
 
-    <div id="output"></div>
+        <div class="job-card">
+            <span class="deadline">Active: Closes April 30, 2026</span>
+            <h4 style="margin: 0;">Relationship Manager (Executive)</h4>
+            <p style="font-size: 0.75rem; color: #64748B; margin: 4px 0;">NMB Bank • Head Office / Morogoro</p>
+            <a href="https://careers.nmbbank.co.tz/nmb_career/career.aspx" target="_blank" class="btn-live">View Active Bank Roles →</a>
+        </div>
+    </div>
 </div>
 
 <script>
-    // This function now uses Deep Search Links to ensure links always work
-    function openJob(role, company) {
-        const query = encodeURIComponent(`${role} vacancy ${company} Tanzania 2026`);
-        const url = `https://www.google.com/search?q=${query}&ibp=htl;jobs`;
-        window.open(url, '_blank', 'noopener,noreferrer');
-    }
-
-    async function startMatching(file) {
-        if(!file) return;
-        document.getElementById('loader').style.display = 'block';
-        document.getElementById('output').innerHTML = '';
-
-        // Simulate AI Audit & Search
-        setTimeout(() => {
-            document.getElementById('loader').style.display = 'none';
-            document.getElementById('output').innerHTML = `
-                <div class="advice-card">
-                    <h4>💡 Immediate CV Fixes</h4>
-                    <ul class="advice-list">
-                        <li><strong>Layout:</strong> Switch to a single-column PDF for NGO ATS scanners.</li>
-                        <li><strong>Missing Skill:</strong> Add "Data-Driven Reporting" to your summary.</li>
-                        <li><strong>Metrics:</strong> State how many staff or projects you managed.</li>
-                    </ul>
-                </div>
-
-                <div class="job-item">
-                    <span class="match-score">94% Match</span>
-                    <h4 style="margin: 0;">Project Manager (Health)</h4>
-                    <p style="font-size: 0.8rem; color: #64748B; margin: 4px 0 10px 0;">UNICEF • Dar es Salaam</p>
-                    <button class="btn-apply" onclick="openJob('Project Manager Health', 'UNICEF')">View Vacancy & Apply →</button>
-                </div>
-            `;
-        }, 2000);
+    function openPortal(type) {
+        // Deep links that force 2026 results and exclude old boards
+        const searchBase = "https://www.google.com/search?q=";
+        const recentFilter = "&tbs=qdr:w"; // ONLY results from this week
+        
+        let query = "";
+        if(type === 'unicef') query = "site:jobs.unicef.org+Tanzania+2026";
+        if(type === 'health') query = "healthcare+project+management+vacancies+Tanzania+2026+-site:brightermonday.co.tz";
+        if(type === 'ngo') query = "site:reliefweb.int+OR+site:impactpool.org+Tanzania+2026";
+        if(type === 'banking') query = "site:careers.nmbbank.co.tz+OR+site:crdbbank.co.tz+vacancies";
+        
+        window.open(searchBase + query + recentFilter, '_blank');
     }
 </script>
 
