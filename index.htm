@@ -3,156 +3,155 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kazi TZ | High-Speed Job Intel</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <title>Kazi TZ | Premium AI Job Scout</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #10B981; --primary-dark: #059669;
-            --bg: #F9FAFB; --card: #FFFFFF;
-            --text: #111827; --text-muted: #6B7280;
-            --radius: 16px;
+            --accent: #10B981; --accent-dark: #065F46;
+            --surface: #FFFFFF; --bg: #FDFDFD;
+            --text: #111827; --text-light: #6B7280;
+            --error: #EF4444;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); }
 
-        .nav { background: #fff; padding: 1.2rem 2rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E5E7EB; position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 1.4rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; text-decoration: none; }
+        .navbar { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F3F4F6; background: #fff; position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: 800; font-size: 1.5rem; color: var(--accent); letter-spacing: -1px; }
         .logo span { color: var(--text); }
 
-        .container { max-width: 900px; margin: 2.5rem auto; padding: 0 1.2rem; }
+        .hero { max-width: 800px; margin: 3rem auto; padding: 0 1.5rem; text-align: center; }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
         
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem; }
-        @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
+        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 900px; margin: 0 auto 3rem; padding: 0 1.5rem; }
+        @media (max-width: 600px) { .main-grid { grid-template-columns: 1fr; } }
 
-        .card { background: var(--card); padding: 2rem; border-radius: var(--radius); border: 1px solid #E5E7EB; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .card:hover { transform: translateY(-4px); border-color: var(--primary); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); }
-        .card h2 { font-size: 1.1rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 10px; }
+        .card { background: #fff; padding: 2rem; border-radius: 24px; border: 1px solid #E5E7EB; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.02); transition: 0.3s; }
+        .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 30px -10px rgba(16,185,129,0.1); }
+        
+        .input-group { margin-top: 1.5rem; }
+        .input { width: 100%; padding: 1.2rem; border: 2px solid #F3F4F6; border-radius: 16px; font-size: 1rem; font-family: inherit; margin-bottom: 1rem; transition: 0.2s; }
+        .input:focus { outline: none; border-color: var(--accent); background: #fff; }
 
-        .input { width: 100%; padding: 1rem; border: 2px solid #F3F4F6; border-radius: 12px; margin-bottom: 1rem; font-size: 1rem; transition: 0.2s; }
-        .input:focus { outline: none; border-color: var(--primary); background: #fff; }
+        .btn { width: 100%; padding: 1.2rem; background: var(--accent); color: #fff; border: none; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: 0.2s; }
+        .btn:hover { background: var(--accent-dark); }
 
-        .btn { width: 100%; padding: 1rem; background: var(--primary); color: #fff; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.2s; font-size: 1rem; }
-        .btn:hover { background: var(--primary-dark); }
+        .upload-box { border: 2px dashed #E5E7EB; padding: 2.5rem 1rem; border-radius: 16px; cursor: pointer; background: #F9FAFB; transition: 0.2s; }
+        .upload-box:hover { border-color: var(--accent); background: #ECFDF5; }
 
-        .upload-zone { border: 2px dashed #E5E7EB; padding: 2.5rem 1rem; text-align: center; border-radius: 12px; cursor: pointer; background: #FBFBFE; transition: 0.2s; }
-        .upload-zone:hover { border-color: var(--primary); background: #ECFDF5; }
+        #status-area { display: none; margin: 2rem auto; max-width: 600px; text-align: center; padding: 1.5rem; background: #fff; border-radius: 20px; border: 1px solid #E5E7EB; }
+        .progress-bar { height: 6px; background: #F3F4F6; border-radius: 10px; overflow: hidden; margin-top: 15px; }
+        .progress-fill { height: 100%; width: 40%; background: var(--accent); animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0% { margin-left: -40%; } 100% { margin-left: 100%; } }
 
-        /* Real-time Status Tracker */
-        #status-box { display: none; margin-bottom: 2rem; padding: 1.5rem; background: #fff; border-radius: var(--radius); border: 1px solid #E5E7EB; }
-        .loader-bar { height: 4px; width: 100%; background: #F3F4F6; border-radius: 10px; overflow: hidden; margin-top: 12px; }
-        .loader-progress { height: 100%; width: 30%; background: var(--primary); animation: slide 2s infinite ease-in-out; }
-        @keyframes slide { 0% { margin-left: -30%; } 100% { margin-left: 100%; } }
-
-        .job-card { background: #fff; padding: 1.5rem; border-radius: var(--radius); margin-bottom: 1rem; border: 1px solid #E5E7EB; transition: 0.2s; }
-        .job-card:hover { border-color: var(--primary); }
-        .job-tag { display: inline-block; padding: 4px 10px; background: #ECFDF5; color: var(--primary-dark); border-radius: 6px; font-size: 0.75rem; font-weight: 700; margin-bottom: 8px; }
-        .job-title { font-weight: 700; font-size: 1.2rem; margin-bottom: 4px; }
-        .job-meta { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 12px; }
-        .apply-link { display: inline-flex; align-items: center; color: var(--primary-dark); text-decoration: none; font-weight: 700; font-size: 0.9rem; gap: 5px; }
+        .job-result { background: #fff; padding: 1.8rem; border-radius: 24px; margin-bottom: 1.5rem; border: 1px solid #E5E7EB; position: relative; overflow: hidden; }
+        .job-result::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--accent); }
+        .job-title { font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
+        .job-meta { font-weight: 600; color: var(--accent-dark); font-size: 0.9rem; margin-bottom: 1rem; }
+        .job-link { display: inline-flex; align-items: center; color: var(--accent-dark); text-decoration: none; font-weight: 800; font-size: 0.9rem; gap: 8px; margin-top: 1rem; }
     </style>
 </head>
 <body>
 
-<nav class="nav">
-    <a href="#" class="logo">Kazi<span>TZ</span></a>
-    <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Fast-Track Enabled</div>
+<nav class="navbar">
+    <div class="logo">Kazi<span>TZ</span></div>
+    <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-light); border: 1px solid #E5E7EB; padding: 4px 12px; border-radius: 20px;">v2.0 LIVE</div>
 </nav>
 
-<main class="container">
-    <div class="grid">
-        <div class="card">
-            <h2>🔍 Search Role</h2>
-            <input type="text" id="jobTitle" class="input" placeholder="e.g. Sales Executive">
-            <button class="btn" onclick="searchByTitle()">Scan Live Now</button>
-        </div>
+<div class="hero">
+    <h1>Find your next <em>Executive</em> role.</h1>
+    <p style="color: var(--text-light);">AI-powered job matching across Tanzania's top active career portals.</p>
+</div>
 
-        <div class="card">
-            <h2>📄 CV Matching</h2>
-            <div class="upload-zone" onclick="document.getElementById('fileInput').click()">
-                <p style="font-weight: 600; color: var(--primary-dark);">Upload Resume</p>
-                <p style="font-size: 0.8rem; color: var(--text-muted);">Instant matching (PDF/Word)</p>
-                <input type="file" id="fileInput" hidden accept=".pdf,.doc,.docx" onchange="searchByCV(this.files[0])">
-            </div>
+<div class="main-grid">
+    <div class="card">
+        <h2 style="font-size: 1.1rem;">🔍 Search Jobs</h2>
+        <div class="input-group">
+            <input type="text" id="jobTitle" class="input" placeholder="e.g. Operations Head">
+            <button class="btn" onclick="searchJobs()">Find Vacancies</button>
         </div>
     </div>
 
-    <div id="status-box">
-        <p id="status-text" style="font-weight: 600; font-size: 0.9rem;">Initializing high-speed scan...</p>
-        <div class="loader-bar"><div class="loader-progress"></div></div>
+    <div class="card">
+        <h2 style="font-size: 1.1rem;">📄 Smart CV Match</h2>
+        <div class="upload-box" onclick="document.getElementById('cvFile').click()">
+            <p style="font-weight: 700; color: var(--accent-dark);">Upload Resume</p>
+            <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 5px;">PDF or Word (Matching by AI)</p>
+            <input type="file" id="cvFile" hidden accept=".pdf,.doc,.docx" onchange="matchCV(this.files[0])">
+        </div>
     </div>
+</div>
 
-    <div id="results"></div>
-</main>
+<div id="status-area">
+    <p id="status-msg" style="font-weight: 700; font-size: 1rem;">Connecting to high-speed job data...</p>
+    <div class="progress-bar"><div class="progress-fill"></div></div>
+</div>
+
+<div id="results" style="max-width: 800px; margin: 0 auto 5rem; padding: 0 1.5rem;"></div>
 
 <script>
-    const API_KEY = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
+    const KEY = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
 
-    async function searchByTitle() {
-        const title = document.getElementById('jobTitle').value;
-        if (!title) return;
-        updateStatus("Scanning ZoomTanzania & BrighterMonday...");
-        await executeSearch(`Find 8 active job openings in Tanzania for: "${title}". Focus on LinkedIn, ZoomTanzania, and Mabumbe.`);
+    async function searchJobs() {
+        const val = document.getElementById('jobTitle').value;
+        if(!val) return;
+        setLoading("Scanning ZoomTanzania, LinkedIn & Government Portals...");
+        await runCall(`Search for 10 active, high-level job openings in Tanzania for: "${val}". Ignore BrighterMonday.`);
     }
 
-    async function searchByCV(file) {
-        if (!file) return;
-        updateStatus("Extracting CV Intelligence...");
+    async function matchCV(file) {
+        if(!file) return;
+        setLoading("Reading Professional Profile...");
         const reader = new FileReader();
         reader.onload = async () => {
-            const base64 = reader.result.split(',')[1];
-            updateStatus("Matching experience with Tanzanian job boards...");
-            await executeSearch("Analyze this CV and find 8 matching open job vacancies in Tanzania.", base64, file.type);
+            const b64 = reader.result.split(',')[1];
+            setLoading("Cross-referencing live Tanzanian career boards...");
+            await runCall("Analyze this CV and find 10 current, relevant job vacancies in Tanzania.", b64, file.type);
         };
         reader.readAsDataURL(file);
     }
 
-    function updateStatus(msg) {
-        document.getElementById('status-box').style.display = 'block';
-        document.getElementById('status-text').innerText = msg;
+    function setLoading(msg) {
+        document.getElementById('status-area').style.display = 'block';
+        document.getElementById('status-msg').innerText = msg;
         document.getElementById('results').innerHTML = '';
     }
 
-    async function executeSearch(prompt, base64 = null, mime = null) {
-        const parts = [{ text: prompt + " Output ONLY a valid JSON array. Structure: [{title, company, location, summary, url}]. Keep summaries brief." }];
-        if (base64) parts.push({ inline_data: { mime_type: mime, data: base64 } });
+    async function runCall(prompt, fileData = null, mime = null, retryCount = 0) {
+        const parts = [{ text: prompt + " Return ONLY a JSON array of objects: [{title, company, location, summary, url}]. Be highly specific." }];
+        if(fileData) parts.push({ inline_data: { mime_type: mime, data: fileData } });
 
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 55000); // 55 second buffer
-
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`, {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${KEY}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    contents: [{ parts }], 
-                    tools: [{ googleSearch: {} }],
-                    generationConfig: { temperature: 0.1 }
-                }),
-                signal: controller.signal
+                body: JSON.stringify({ contents: [{ parts }], tools: [{ googleSearch: {} }] })
             });
 
-            clearTimeout(timeoutId);
-            const data = await response.json();
-            const raw = data.candidates[0].content.parts[0].text;
-            const jobs = JSON.parse(raw.replace(/```json|```/g, ''));
+            if (res.status === 429 && retryCount < 2) {
+                setLoading(`System Busy. Retrying in ${3 * (retryCount + 1)} seconds...`);
+                setTimeout(() => runCall(prompt, fileData, mime, retryCount + 1), 3000 * (retryCount + 1));
+                return;
+            }
 
+            const json = await res.json();
+            const jobs = JSON.parse(json.candidates[0].content.parts[0].text.replace(/```json|```/g, ''));
+            
             document.getElementById('results').innerHTML = jobs.map(j => `
-                <div class="job-card">
-                    <span class="job-tag">Verified Match</span>
+                <div class="job-result">
                     <div class="job-title">${j.title}</div>
-                    <div class="job-meta">${j.company} • ${j.location}</div>
-                    <p style="font-size: 0.85rem; color: #4B5563; margin-bottom: 12px;">${j.summary}</p>
-                    <a href="${j.url}" target="_blank" class="apply-link">Apply on Official Site →</a>
+                    <div class="job-meta">${j.company} — ${j.location}</div>
+                    <p style="font-size: 0.9rem; color: #4B5563;">${j.summary}</p>
+                    <a href="${j.url}" target="_blank" class="job-link">Apply on Official Portal →</a>
                 </div>
             `).join('');
         } catch (e) {
             document.getElementById('results').innerHTML = `
-                <div style="background: #FEF2F2; color: #991B1B; padding: 1.5rem; border-radius: 12px; text-align: center;">
-                    <strong>Speed Limit Reached.</strong> The job boards are responding slowly. <br>
-                    <button onclick="location.reload()" style="margin-top:10px; background:#991B1B; color:#fff; border:none; padding:5px 15px; border-radius:5px; cursor:pointer;">Fast Retry</button>
+                <div style="text-align:center; padding:3rem; border:2px dashed #FEE2E2; border-radius:24px;">
+                    <p style="color:#991B1B; font-weight:700;">Live Search Overloaded</p>
+                    <p style="font-size:0.8rem; color:#B91C1C; margin-top:5px;">This role has high demand. Please try a more specific title or wait 10 seconds.</p>
                 </div>`;
         } finally {
-            document.getElementById('status-box').style.display = 'none';
+            document.getElementById('status-area').style.display = 'none';
         }
     }
 </script>
