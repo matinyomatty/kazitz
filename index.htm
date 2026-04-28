@@ -3,155 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kazi TZ | Premium AI Job Scout</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <title>Kazi TZ | Executive & NGO Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --accent: #10B981; --accent-dark: #065F46;
-            --surface: #FFFFFF; --bg: #FDFDFD;
-            --text: #111827; --text-light: #6B7280;
-            --error: #EF4444;
-        }
+        :root { --primary: #1A7A4A; --bg: #F8FAFC; --card: #FFFFFF; --text: #1E293B; }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); }
-
-        .navbar { padding: 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #F3F4F6; background: #fff; position: sticky; top: 0; z-index: 100; }
-        .logo { font-weight: 800; font-size: 1.5rem; color: var(--accent); letter-spacing: -1px; }
-        .logo span { color: var(--text); }
-
-        .hero { max-width: 800px; margin: 3rem auto; padding: 0 1.5rem; text-align: center; }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -1px; }
+        body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); }
         
-        .main-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; max-width: 900px; margin: 0 auto 3rem; padding: 0 1.5rem; }
-        @media (max-width: 600px) { .main-grid { grid-template-columns: 1fr; } }
+        .navbar { background: #fff; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #E2E8F0; position: sticky; top: 0; z-index: 100; }
+        .logo { font-weight: 800; font-size: 1.6rem; color: var(--primary); letter-spacing: -1px; }
+        .logo span { color: #000; }
 
-        .card { background: #fff; padding: 2rem; border-radius: 24px; border: 1px solid #E5E7EB; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.02); transition: 0.3s; }
-        .card:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 20px 30px -10px rgba(16,185,129,0.1); }
-        
-        .input-group { margin-top: 1.5rem; }
-        .input { width: 100%; padding: 1.2rem; border: 2px solid #F3F4F6; border-radius: 16px; font-size: 1rem; font-family: inherit; margin-bottom: 1rem; transition: 0.2s; }
-        .input:focus { outline: none; border-color: var(--accent); background: #fff; }
+        .container { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+        .hero { text-align: center; margin-bottom: 2.5rem; }
+        .hero h1 { font-size: 2.2rem; margin-bottom: 0.5rem; }
 
-        .btn { width: 100%; padding: 1.2rem; background: var(--accent); color: #fff; border: none; border-radius: 16px; font-weight: 700; cursor: pointer; font-size: 1rem; transition: 0.2s; }
-        .btn:hover { background: var(--accent-dark); }
+        /* Modern Sector Grid */
+        .sector-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 2rem; }
+        .sector-btn { padding: 12px; border-radius: 12px; border: 1px solid #E2E8F0; background: #fff; cursor: pointer; font-weight: 600; font-size: 0.85rem; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 6px; }
+        .sector-btn:hover { border-color: var(--primary); background: #F0FDF4; transform: translateY(-2px); }
 
-        .upload-box { border: 2px dashed #E5E7EB; padding: 2.5rem 1rem; border-radius: 16px; cursor: pointer; background: #F9FAFB; transition: 0.2s; }
-        .upload-box:hover { border-color: var(--accent); background: #ECFDF5; }
+        .search-card { background: #fff; border-radius: 20px; padding: 1.5rem; border: 1px solid #E2E8F0; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.05); }
+        .search-flex { display: flex; gap: 8px; margin-bottom: 1rem; }
+        .input { flex: 1; padding: 12px 16px; border-radius: 12px; border: 2.5px solid #F1F5F9; font-size: 1rem; }
+        .input:focus { border-color: var(--primary); outline: none; }
+        .btn-search { background: var(--primary); color: #fff; border: none; padding: 12px 24px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-        #status-area { display: none; margin: 2rem auto; max-width: 600px; text-align: center; padding: 1.5rem; background: #fff; border-radius: 20px; border: 1px solid #E5E7EB; }
-        .progress-bar { height: 6px; background: #F3F4F6; border-radius: 10px; overflow: hidden; margin-top: 15px; }
-        .progress-fill { height: 100%; width: 40%; background: var(--accent); animation: pulse 1.5s infinite ease-in-out; }
-        @keyframes pulse { 0% { margin-left: -40%; } 100% { margin-left: 100%; } }
+        #status { display: none; text-align: center; margin: 1.5rem 0; padding: 1rem; border-radius: 12px; background: #fff; border: 1px solid #E2E8F0; }
+        .spinner { width: 20px; height: 20px; border: 2.5px solid #F1F5F9; border-top-color: var(--primary); border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; margin-right: 10px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        .job-result { background: #fff; padding: 1.8rem; border-radius: 24px; margin-bottom: 1.5rem; border: 1px solid #E5E7EB; position: relative; overflow: hidden; }
-        .job-result::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 6px; background: var(--accent); }
-        .job-title { font-size: 1.3rem; font-weight: 700; color: var(--text); margin-bottom: 0.5rem; }
-        .job-meta { font-weight: 600; color: var(--accent-dark); font-size: 0.9rem; margin-bottom: 1rem; }
-        .job-link { display: inline-flex; align-items: center; color: var(--accent-dark); text-decoration: none; font-weight: 800; font-size: 0.9rem; gap: 8px; margin-top: 1rem; }
+        .job-card { background: #fff; padding: 1.5rem; border-radius: 18px; margin-bottom: 1rem; border: 1px solid #E2E8F0; transition: 0.2s; }
+        .job-card:hover { border-color: var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .job-title { font-weight: 700; font-size: 1.15rem; color: #0F172A; margin-bottom: 4px; }
+        .job-org { color: var(--primary); font-weight: 600; font-size: 0.9rem; margin-bottom: 10px; }
+        .apply-btn { text-decoration: none; font-weight: 700; color: var(--primary); font-size: 0.85rem; border: 1.5px solid var(--primary); padding: 6px 14px; border-radius: 8px; display: inline-block; margin-top: 10px; }
+        .apply-btn:hover { background: var(--primary); color: #fff; }
     </style>
 </head>
 <body>
 
 <nav class="navbar">
     <div class="logo">Kazi<span>TZ</span></div>
-    <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-light); border: 1px solid #E5E7EB; padding: 4px 12px; border-radius: 20px;">v2.0 LIVE</div>
+    <button onclick="location.reload()" style="background:none; border:none; color:var(--text-light); font-weight:600; font-size:0.8rem; cursor:pointer;">RECOVERY MODE</button>
 </nav>
 
-<div class="hero">
-    <h1>Find your next <em>Executive</em> role.</h1>
-    <p style="color: var(--text-light);">AI-powered job matching across Tanzania's top active career portals.</p>
-</div>
+<div class="container">
+    <div class="hero">
+        <h1>Live Executive Jobs</h1>
+        <p style="color: #64748B;">AI search optimized for UN, NGO, and Healthcare roles in Tanzania.</p>
+    </div>
 
-<div class="main-grid">
-    <div class="card">
-        <h2 style="font-size: 1.1rem;">🔍 Search Jobs</h2>
-        <div class="input-group">
-            <input type="text" id="jobTitle" class="input" placeholder="e.g. Operations Head">
-            <button class="btn" onclick="searchJobs()">Find Vacancies</button>
+    <div class="sector-grid">
+        <button class="sector-btn" onclick="quickSearch('UN Agencies and International Organizations')">🇺🇳 UN Jobs</button>
+        <button class="sector-btn" onclick="quickSearch('Health and Hospital Management')">🏥 Health</button>
+        <button class="sector-btn" onclick="quickSearch('NGO and Non-Profit')">🌍 NGO</button>
+        <button class="sector-btn" onclick="quickSearch('Finance and Banking')">💰 Finance</button>
+    </div>
+
+    <div class="search-card">
+        <div class="search-flex">
+            <input type="text" id="role" class="input" placeholder="Role, e.g. 'Project Manager'">
+            <button class="btn-search" onclick="customSearch()">Search</button>
         </div>
     </div>
 
-    <div class="card">
-        <h2 style="font-size: 1.1rem;">📄 Smart CV Match</h2>
-        <div class="upload-box" onclick="document.getElementById('cvFile').click()">
-            <p style="font-weight: 700; color: var(--accent-dark);">Upload Resume</p>
-            <p style="font-size: 0.8rem; color: var(--text-light); margin-top: 5px;">PDF or Word (Matching by AI)</p>
-            <input type="file" id="cvFile" hidden accept=".pdf,.doc,.docx" onchange="matchCV(this.files[0])">
-        </div>
+    <div id="status">
+        <div class="spinner"></div>
+        <span id="msg">Scanning active job boards...</span>
     </div>
-</div>
 
-<div id="status-area">
-    <p id="status-msg" style="font-weight: 700; font-size: 1rem;">Connecting to high-speed job data...</p>
-    <div class="progress-bar"><div class="progress-fill"></div></div>
+    <div id="results" style="margin-top: 2rem;"></div>
 </div>
-
-<div id="results" style="max-width: 800px; margin: 0 auto 5rem; padding: 0 1.5rem;"></div>
 
 <script>
-    const KEY = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
+    const API = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
 
-    async function searchJobs() {
-        const val = document.getElementById('jobTitle').value;
-        if(!val) return;
-        setLoading("Scanning ZoomTanzania, LinkedIn & Government Portals...");
-        await runCall(`Search for 10 active, high-level job openings in Tanzania for: "${val}". Ignore BrighterMonday.`);
+    async function quickSearch(cat) {
+        setLoading(`Searching latest ${cat} vacancies...`);
+        await run(`Find 8 active job vacancies in Tanzania for: ${cat}. Primary sources: Impactpool, ReliefWeb, and Government portals. Ignore BrighterMonday.`);
     }
 
-    async function matchCV(file) {
-        if(!file) return;
-        setLoading("Reading Professional Profile...");
-        const reader = new FileReader();
-        reader.onload = async () => {
-            const b64 = reader.result.split(',')[1];
-            setLoading("Cross-referencing live Tanzanian career boards...");
-            await runCall("Analyze this CV and find 10 current, relevant job vacancies in Tanzania.", b64, file.type);
-        };
-        reader.readAsDataURL(file);
+    async function customSearch() {
+        const r = document.getElementById('role').value;
+        if(!r) return;
+        setLoading(`Hunting for ${r} roles...`);
+        await run(`Search 10 active vacancies in Tanzania for "${r}". Ensure URLs are current for 2026. Focus on professional/NGO sites.`);
     }
 
-    function setLoading(msg) {
-        document.getElementById('status-area').style.display = 'block';
-        document.getElementById('status-msg').innerText = msg;
+    function setLoading(m) {
+        document.getElementById('status').style.display = 'block';
+        document.getElementById('msg').innerText = m;
         document.getElementById('results').innerHTML = '';
     }
 
-    async function runCall(prompt, fileData = null, mime = null, retryCount = 0) {
-        const parts = [{ text: prompt + " Return ONLY a JSON array of objects: [{title, company, location, summary, url}]. Be highly specific." }];
-        if(fileData) parts.push({ inline_data: { mime_type: mime, data: fileData } });
-
+    async function run(prompt) {
         try {
-            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${KEY}`, {
+            const controller = new AbortController();
+            const tid = setTimeout(() => controller.abort(), 40000); // 40s hard limit
+
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ contents: [{ parts }], tools: [{ googleSearch: {} }] })
+                body: JSON.stringify({
+                    contents: [{ parts: [{ text: prompt + " Output ONLY a JSON array of objects: [{title, company, location, summary, url}]." }] }],
+                    tools: [{ googleSearch: {} }]
+                }),
+                signal: controller.signal
             });
 
-            if (res.status === 429 && retryCount < 2) {
-                setLoading(`System Busy. Retrying in ${3 * (retryCount + 1)} seconds...`);
-                setTimeout(() => runCall(prompt, fileData, mime, retryCount + 1), 3000 * (retryCount + 1));
-                return;
-            }
+            clearTimeout(tid);
+            const data = await res.json();
+            const jobs = JSON.parse(data.candidates[0].content.parts[0].text.replace(/```json|```/g, ''));
 
-            const json = await res.json();
-            const jobs = JSON.parse(json.candidates[0].content.parts[0].text.replace(/```json|```/g, ''));
-            
             document.getElementById('results').innerHTML = jobs.map(j => `
-                <div class="job-result">
+                <div class="job-card">
                     <div class="job-title">${j.title}</div>
-                    <div class="job-meta">${j.company} — ${j.location}</div>
-                    <p style="font-size: 0.9rem; color: #4B5563;">${j.summary}</p>
-                    <a href="${j.url}" target="_blank" class="job-link">Apply on Official Portal →</a>
+                    <div class="job-org">${j.company} • ${j.location}</div>
+                    <p style="font-size: 0.85rem; color: #475569; line-height: 1.5;">${j.summary}</p>
+                    <a href="${j.url}" target="_blank" class="apply-btn">View Opportunity →</a>
                 </div>
             `).join('');
         } catch (e) {
             document.getElementById('results').innerHTML = `
-                <div style="text-align:center; padding:3rem; border:2px dashed #FEE2E2; border-radius:24px;">
-                    <p style="color:#991B1B; font-weight:700;">Live Search Overloaded</p>
-                    <p style="font-size:0.8rem; color:#B91C1C; margin-top:5px;">This role has high demand. Please try a more specific title or wait 10 seconds.</p>
+                <div style="text-align:center; padding:2rem; background:#FFF1F2; border-radius:15px; color:#9F1239; border:1px solid #FECDD3;">
+                    <strong>Session Timeout</strong><br>The job server is busy. Tap "RECOVERY MODE" at the top to reset.
                 </div>`;
         } finally {
-            document.getElementById('status-area').style.display = 'none';
+            document.getElementById('status').style.display = 'none';
         }
     }
 </script>
