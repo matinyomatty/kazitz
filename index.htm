@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Kazi TZ — Free AI Job Search Tanzania</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --ink: #0D1117;
+  --ink2: #3D4451;
+  --ink3: #7A8190;
+  --paper: #F8F6F1;
+  --paper2: #EEEAE0;
+  --paper3: #E2DDD3;
+  --green: #1A7A4A;
+  --green-light: #D6EDE2;
+  --green-mid: #A8D4BB;
+  --gold: #B8860B;
+  --gold-light: #FDF4DC;
+  --red: #C0392B;
+  --red-light: #FAEAEA;
+  --blue: #1A3A7A;
+  --blue-light: #E0E8F8;
+  --surface: #FFFFFF;
+  --r: 10px; --r-lg: 18px; --r-xl: 28px;
+  --shadow: 0 2px 8px rgba(13,17,23,0.07), 0 1px 2px rgba(13,17,23,0.04);
+  --shadow-lg: 0 8px 32px rgba(13,17,23,0.12);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Outfit', system-ui, sans-serif;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--paper); color: var(--ink); min-height: 100vh; font-size: 15px; line-height: 1.6; }
+
+/* ── SETUP BANNER ── */
+.setup-banner { background: var(–ink); color: #fff; padding: 10px 20px; text-align: center; font-size: 13px; display: flex; align-items: center; justify-content: center; gap: 10px; flex-wrap: wrap; }
+.setup-banner.hidden { display: none; }
+.setup-banner a { color: var(–green-mid); font-weight: 600; }
+.setup-key-btn { background: var(–green); color: #fff; border: none; border-radius: 6px; padding: 5px 14px; font-size: 12px; font-weight: 600; cursor: pointer; font-family: var(–font-body); }
+
+/* ── HEADER ── */
+.header { background: var(–surface); border-bottom: 1px solid var(–paper3); position: sticky; top: 0; z-index: 100; }
+.header-inner { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; display: flex; align-items: center; gap: 1rem; height: 62px; }
+.logo { font-family: var(–font-display); font-size: 24px; color: var(–ink); letter-spacing: -0.01em; text-decoration: none; }
+.logo em { font-style: italic; color: var(–green); }
+.header-sub { font-size: 12px; color: var(–ink3); border-left: 1px solid var(–paper3); padding-left: 1rem; flex: 1; }
+.free-badge { background: var(–green-light); color: var(–green); font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; border: 1px solid var(–green-mid); white-space: nowrap; }
+
+/* ── HERO ── */
+.hero { background: var(–surface); border-bottom: 2px solid var(–paper3); padding: 3rem 1.5rem 2.5rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ‘’; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(26,122,74,0.06) 0%, transparent 70%); pointer-events: none; }
+.hero-label { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(–green); margin-bottom: 1rem; background: var(–green-light); padding: 5px 14px; border-radius: 20px; border: 1px solid var(–green-mid); }
+.hero h1 { font-family: var(–font-display); font-size: clamp(28px, 5.5vw, 52px); line-height: 1.1; color: var(–ink); margin-bottom: 0.75rem; letter-spacing: -0.02em; max-width: 720px; margin-left: auto; margin-right: auto; }
+.hero h1 em { font-style: italic; color: var(–green); }
+.hero-sub { font-size: 15px; color: var(–ink2); max-width: 520px; margin: 0 auto 2rem; line-height: 1.7; }
+
+/* ── MODE TABS ── */
+.mode-tabs { display: inline-flex; background: var(–paper2); border-radius: var(–r-xl); padding: 4px; margin-bottom: 1.75rem; border: 1px solid var(–paper3); }
+.mode-tab { padding: 9px 22px; font-size: 13.5px; font-weight: 500; font-family: var(–font-body); border: none; background: transparent; color: var(–ink3); cursor: pointer; border-radius: calc(var(–r-xl) - 3px); transition: all 0.2s; display: flex; align-items: center; gap: 7px; }
+.mode-tab.active { background: var(–surface); color: var(–ink); box-shadow: var(–shadow); font-weight: 600; }
+
+/* ── SEARCH PANEL ── */
+.search-panel { max-width: 700px; margin: 0 auto; }
+.search-wrap { display: flex; gap: 8px; margin-bottom: 1rem; }
+.search-input { flex: 1; height: 52px; padding: 0 18px; border: 2px solid var(–paper3); border-radius: var(–r-lg); background: var(–surface); color: var(–ink); font-family: var(–font-body); font-size: 15px; transition: border-color 0.15s; }
+.search-input:focus { outline: none; border-color: var(–green); }
+.search-input::placeholder { color: var(–ink3); }
+.search-btn { height: 52px; padding: 0 24px; border-radius: var(–r-lg); border: none; background: var(–green); color: #fff; font-family: var(–font-body); font-size: 14px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 8px; white-space: nowrap; transition: all 0.15s; }
+.search-btn:hover { background: #155e38; }
+.search-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.quick-pills { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.pill { font-size: 12px; padding: 5px 13px; border-radius: 20px; background: var(–paper2); color: var(–ink2); border: 1px solid var(–paper3); cursor: pointer; transition: all 0.15s; font-family: var(–font-body); }
+.pill:hover { border-color: var(–green); color: var(–green); background: var(–green-light); }
+
+/* ── CV PANEL ── */
+.cv-panel { display: none; max-width: 680px; margin: 0 auto; }
+.cv-panel.visible { display: block; }
+.drop-zone { border: 2px dashed var(–paper3); border-radius: var(–r-xl); padding: 2.5rem 2rem; text-align: center; background: var(–surface); cursor: pointer; transition: all 0.2s; }
+.drop-zone:hover, .drop-zone.drag { border-color: var(–green); background: var(–green-light); }
+.drop-icon { font-size: 44px; margin-bottom: 0.75rem; }
+.drop-title { font-family: var(–font-display); font-size: 22px; color: var(–ink); margin-bottom: 6px; }
+.drop-sub { font-size: 14px; color: var(–ink2); margin-bottom: 4px; }
+.drop-formats { font-size: 12px; color: var(–ink3); margin-bottom: 1.25rem; }
+.upload-label { display: inline-block; font-size: 14px; font-weight: 600; padding: 10px 26px; border-radius: var(–r); background: var(–ink); color: #fff; cursor: pointer; transition: opacity 0.15s; }
+.upload-label:hover { opacity: 0.82; }
+.cv-note { font-size: 12px; color: var(–ink3); text-align: center; margin-top: 10px; }
+
+/* CV PROFILE CARD */
+.cv-profile-card { background: var(–surface); border: 1px solid var(–paper3); border-left: 4px solid var(–green); border-radius: var(–r-lg); padding: 1.25rem 1.5rem; margin-bottom: 1rem; display: none; }
+.cv-profile-card.show { display: block; }
+.cv-profile-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.cv-name { font-family: var(–font-display); font-size: 18px; color: var(–ink); }
+.cv-headline { font-size: 13px; color: var(–green); font-weight: 600; margin-top: 2px; }
+.cv-reset { font-size: 12px; color: var(–ink3); cursor: pointer; text-decoration: underline; background: none; border: none; font-family: var(–font-body); }
+.cv-skills { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 8px; }
+.cv-skill { font-size: 12px; background: var(–green-light); border: 1px solid var(–green-mid); border-radius: 20px; padding: 3px 11px; color: var(–green); font-weight: 500; }
+.cv-meta { font-size: 12px; color: var(–ink3); margin-bottom: 12px; line-height: 1.8; }
+.cv-find-btn { width: 100%; height: 48px; border-radius: var(–r-lg); border: none; background: var(–green); color: #fff; font-family: var(–font-display); font-size: 17px; font-style: italic; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.cv-find-btn:hover { background: #155e38; }
+.cv-find-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── MAIN ── */
+.main { max-width: 1100px; margin: 0 auto; padding: 2rem 1.5rem; }
+
+/* KEY INPUT MODAL */
+.modal-bg { display: none; position: fixed; inset: 0; background: rgba(13,17,23,0.5); z-index: 300; align-items: center; justify-content: center; padding: 1rem; }
+.modal-bg.show { display: flex; }
+.modal-box { background: var(–surface); border-radius: var(–r-xl); padding: 2rem; max-width: 480px; width: 100%; box-shadow: var(–shadow-lg); }
+.modal-title { font-family: var(–font-display); font-size: 22px; color: var(–ink); margin-bottom: 6px; }
+.modal-sub { font-size: 13px; color: var(–ink2); margin-bottom: 1.25rem; line-height: 1.65; }
+.modal-steps { background: var(–paper); border-radius: var(–r); padding: 1rem 1.25rem; margin-bottom: 1.25rem; font-size: 13px; color: var(–ink2); line-height: 2; }
+.modal-steps a { color: var(–green); font-weight: 600; }
+.modal-steps strong { color: var(–ink); }
+.key-input { width: 100%; height: 44px; padding: 0 14px; border: 2px solid var(–paper3); border-radius: var(–r); font-family: var(–font-body); font-size: 14px; color: var(–ink); margin-bottom: 10px; }
+.key-input:focus { outline: none; border-color: var(–green); }
+.key-save-btn { width: 100%; height: 44px; border: none; border-radius: var(–r); background: var(–green); color: #fff; font-family: var(–font-body); font-size: 14px; font-weight: 600; cursor: pointer; }
+.key-save-btn:hover { background: #155e38; }
+.key-note { font-size: 11px; color: var(–ink3); text-align: center; margin-top: 8px; }
+
+/* ── STATUS ── */
+.ai-status { display: none; background: var(–surface); border: 1px solid var(–paper3); border-radius: var(–r-lg); padding: 1.75rem; margin-bottom: 1.5rem; text-align: center; }
+.ai-status.show { display: block; }
+.spinner { width: 40px; height: 40px; border: 3px solid var(–paper3); border-top-color: var(–green); border-radius: 50%; animation: spin 0.75s linear infinite; margin: 0 auto 14px; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.status-msg { font-size: 15px; font-weight: 500; color: var(–ink2); }
+.status-sub { font-size: 12px; color: var(–ink3); margin-top: 4px; }
+
+/* ── ERROR ── */
+.error-box { display: none; background: var(–red-light); border: 1px solid #EAB8B3; border-radius: var(–r-lg); padding: 1rem 1.25rem; margin-bottom: 1.5rem; color: var(–red); font-size: 14px; }
+
+/* ── STATS ── */
+.stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; margin-bottom: 1.5rem; }
+.stat { background: var(–surface); border: 1px solid var(–paper3); border-radius: var(–r-lg); padding: 1rem 1.25rem; }
+.stat-n { font-family: var(–font-display); font-size: 28px; line-height: 1; margin-bottom: 3px; }
+.stat-l { font-size: 11px; color: var(–ink3); text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* ── FILTERS ── */
+.filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1.25rem; align-items: center; }
+.filter-search { flex: 1; min-width: 160px; position: relative; }
+.filter-search svg { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); pointer-events: none; }
+.filter-input { width: 100%; height: 38px; padding: 0 10px 0 34px; border: 1px solid var(–paper3); border-radius: var(–r); background: var(–surface); font-family: var(–font-body); font-size: 13px; color: var(–ink); }
+.filter-input:focus { outline: none; border-color: var(–green); }
+select.fsel { height: 38px; padding: 0 10px; border: 1px solid var(–paper3); border-radius: var(–r); background: var(–surface); font-family: var(–font-body); font-size: 13px; color: var(–ink); cursor: pointer; }
+
+/* ── JOB CARDS ── */
+.jobs-list { display: flex; flex-direction: column; gap: 14px; }
+.job-card { background: var(–surface); border: 1px solid var(–paper3); border-radius: var(–r-lg); padding: 1.4rem 1.6rem; transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s; animation: rise 0.35s ease both; }
+@keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.job-card:nth-child(1){animation-delay:0s}
+.job-card:nth-child(2){animation-delay:0.05s}
+.job-card:nth-child(3){animation-delay:0.10s}
+.job-card:nth-child(4){animation-delay:0.15s}
+.job-card:nth-child(5){animation-delay:0.20s}
+.job-card:hover { box-shadow: var(–shadow-lg); border-color: var(–paper3); transform: translateY(-1px); }
+.job-card.strong-match { border-left: 4px solid var(–green); }
+.job-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 10px; }
+.job-title { font-size: 16px; font-weight: 600; color: var(–ink); line-height: 1.3; }
+.job-org { font-size: 13px; color: var(–ink2); margin-top: 3px; }
+.badges { display: flex; gap: 5px; flex-wrap: wrap; flex-shrink: 0; }
+.badge { font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px; white-space: nowrap; }
+.b-health { background: var(–green-light); color: var(–green); border: 1px solid var(–green-mid); }
+.b-ngo { background: var(–gold-light); color: var(–gold); border: 1px solid #DEC97A; }
+.b-general { background: var(–blue-light); color: var(–blue); border: 1px solid #B0C4E8; }
+.match-bar-wrap { margin-bottom: 10px; }
+.match-bar { height: 5px; background: var(–paper2); border-radius: 3px; overflow: hidden; margin-bottom: 4px; }
+.match-fill { height: 100%; border-radius: 3px; }
+.match-info { display: flex; justify-content: space-between; font-size: 11px; color: var(–ink3); }
+.match-reason { font-size: 12.5px; color: var(–green); font-weight: 500; background: var(–green-light); border-radius: var(–r); padding: 7px 12px; margin-bottom: 10px; border-left: 3px solid var(–green); }
+.meta-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+.meta-tag { font-size: 12px; color: var(–ink2); background: var(–paper); padding: 3px 10px; border-radius: 6px; border: 1px solid var(–paper3); }
+.job-desc { font-size: 13.5px; color: var(–ink2); line-height: 1.65; margin-bottom: 14px; }
+.card-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.apply-btn { font-size: 13.5px; font-weight: 600; padding: 9px 20px; border-radius: var(–r); border: none; background: var(–green); color: #fff; cursor: pointer; font-family: var(–font-body); text-decoration: none; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s; }
+.apply-btn:hover { background: #155e38; }
+.tips-btn { font-size: 13px; padding: 8px 16px; border-radius: var(–r); border: 1px solid var(–paper3); background: transparent; color: var(–ink2); cursor: pointer; font-family: var(–font-body); transition: all 0.15s; }
+.tips-btn:hover { border-color: var(–green); color: var(–green); }
+.src-label { font-size: 11px; color: var(–ink3); margin-left: 2px; }
+
+/* ── WELCOME ── */
+.welcome { text-align: center; padding: 4rem 2rem; }
+.welcome-icon { font-size: 50px; margin-bottom: 1rem; }
+.welcome-title { font-family: var(–font-display); font-size: 26px; color: var(–ink); margin-bottom: 0.5rem; }
+.welcome-sub { font-size: 14px; color: var(–ink2); max-width: 400px; margin: 0 auto 2rem; line-height: 1.75; }
+.welcome-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 12px; max-width: 640px; margin: 0 auto; }
+.w-card { background: var(–surface); border: 1px solid var(–paper3); border-radius: var(–r-lg); padding: 1.25rem 1rem; text-align: left; cursor: pointer; transition: all 0.15s; }
+.w-card:hover { border-color: var(–green); background: var(–green-light); }
+.w-icon { font-size: 24px; margin-bottom: 8px; }
+.w-title { font-size: 13px; font-weight: 600; color: var(–ink); margin-bottom: 3px; }
+.w-sub { font-size: 12px; color: var(–ink3); }
+
+/* ── TIPS MODAL ── */
+.tips-modal-bg { display: none; position: fixed; inset: 0; background: rgba(13,17,23,0.5); z-index: 200; align-items: center; justify-content: center; padding: 1rem; }
+.tips-modal-bg.show { display: flex; }
+.tips-box { background: var(–surface); border-radius: var(–r-xl); padding: 2rem; max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: var(–shadow-lg); }
+.tips-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+.tips-title { font-family: var(–font-display); font-size: 20px; }
+.tips-close { background: var(–paper2); border: 1px solid var(–paper3); border-radius: 8px; width: 32px; height: 32px; cursor: pointer; font-size: 16px; display: flex; align-items: center; justify-content: center; }
+.tips-close:hover { background: var(–paper3); }
+.tips-body { font-size: 13.5px; color: var(–ink2); line-height: 1.85; white-space: pre-wrap; }
+
+/* ── FOOTER ── */
+footer { border-top: 1px solid var(–paper3); background: var(–surface); padding: 2rem 1.5rem; text-align: center; margin-top: 4rem; }
+.foot-logo { font-family: var(–font-display); font-size: 22px; color: var(–ink); margin-bottom: 6px; }
+.foot-logo em { font-style: italic; color: var(–green); }
+.foot-sub { font-size: 13px; color: var(–ink3); line-height: 1.75; }
+
+@media (max-width: 640px) {
+.stats { grid-template-columns: repeat(2,1fr); }
+.welcome-cards { grid-template-columns: 1fr; }
+.header-sub { display: none; }
+.search-wrap { flex-direction: column; }
+.search-btn { width: 100%; justify-content: center; height: 46px; }
+.mode-tabs { width: 100%; }
+.mode-tab { flex: 1; justify-content: center; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- SETUP BANNER -->
+
+<div class="setup-banner" id="setupBanner">
+  ⚡ One-time setup needed — <strong style="margin:0 4px;">add your free Gemini API key</strong> to start searching jobs
+  <button class="setup-key-btn" onclick="showKeyModal()">Add Free Key →</button>
+  <span style="color:#888;font-size:11px;">Get yours free at <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com</a></span>
+</div>
+
+<!-- HEADER -->
+
+<header class="header">
+  <div class="header-inner">
+    <a class="logo" href="#">Kazi <em>TZ</em></a>
+    <div class="header-sub">AI-powered live job search · Tanzania 🇹🇿</div>
+    <span class="free-badge">✓ 100% Free</span>
+    <button onclick="showKeyModal()" style="font-size:12px;color:var(--ink3);background:none;border:1px solid var(--paper3);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--font-body);">🔑 Change Key</button>
+  </div>
+</header>
+
+<!-- HERO -->
+
+<section class="hero">
+  <div class="hero-label">✦ Powered by Google Gemini AI — Free</div>
+  <h1>Real Tanzania jobs,<br/><em>found live by AI</em></h1>
+  <p class="hero-sub">Search by role or upload your CV. AI scans real job boards right now and gives you a direct link to apply — completely free.</p>
+
+  <!-- MODE TABS -->
+
+  <div class="mode-tabs">
+    <button class="mode-tab active" id="tabSearch" onclick="switchMode('search')">🔍 Search Jobs</button>
+    <button class="mode-tab" id="tabCV" onclick="switchMode('cv')">📄 Match My CV</button>
+  </div>
+
+  <!-- SEARCH PANEL -->
+
+  <div class="search-panel" id="searchPanel">
+    <div class="search-wrap">
+      <input class="search-input" id="mainSearch" type="text" placeholder="e.g. Nurse Dar es Salaam, NGO Finance Officer, Software Developer…"/>
+      <button class="search-btn" id="searchBtn" onclick="triggerSearch()">
+        <span id="searchIcon">✦</span> Search Jobs
+      </button>
+    </div>
+    <div class="quick-pills">
+      <span class="pill" onclick="qs('Healthcare Nurse Doctor open jobs Tanzania')">🏥 Healthcare</span>
+      <span class="pill" onclick="qs('NGO INGO Programme Officer open jobs Tanzania')">🌍 NGO / INGO</span>
+      <span class="pill" onclick="qs('Finance Accounting open jobs Tanzania')">💼 Finance</span>
+      <span class="pill" onclick="qs('Software Developer IT open jobs Tanzania')">💻 Tech / IT</span>
+      <span class="pill" onclick="qs('Teaching Education open jobs Tanzania')">📚 Education</span>
+      <span class="pill" onclick="qs('Government public service open jobs Tanzania utumishi')">🏛️ Government</span>
+      <span class="pill" onclick="qs('Logistics Supply Chain open jobs Tanzania')">📦 Logistics</span>
+      <span class="pill" onclick="qs('UN United Nations agency open jobs Tanzania')">🇺🇳 UN Agencies</span>
+      <span class="pill" onclick="qs('Hotel Hospitality Tourism open jobs Tanzania')">🏨 Tourism</span>
+      <span class="pill" onclick="qs('Engineering Construction open jobs Tanzania')">⚙️ Engineering</span>
+    </div>
+  </div>
+
+  <!-- CV PANEL -->
+
+  <div class="cv-panel" id="cvPanel">
+    <div class="drop-zone" id="dropZone" onclick="document.getElementById('cvInput').click()">
+      <div class="drop-icon">📄</div>
+      <div class="drop-title">Upload your CV</div>
+      <div class="drop-sub">AI reads every job title, skill and experience in your CV, then finds real Tanzania jobs that match your exact background</div>
+      <div class="drop-formats">PDF · DOC · DOCX · TXT &nbsp;·&nbsp; Drag &amp; drop or click to browse</div>
+      <label class="upload-label" onclick="event.stopPropagation()">
+        Choose CV file
+        <input type="file" id="cvInput" accept=".pdf,.doc,.docx,.txt" style="display:none;" onchange="handleCV(this.files[0])"/>
+      </label>
+    </div>
+    <div class="cv-note">Your CV is only used to find you matching jobs — it is not stored anywhere.</div>
+
+```
+<div class="cv-profile-card" id="cvProfileCard">
+  <div class="cv-profile-top">
+    <div>
+      <div class="cv-name" id="cvName"></div>
+      <div class="cv-headline" id="cvHeadline"></div>
+    </div>
+    <button class="cv-reset" onclick="resetCV()">Change CV</button>
+  </div>
+  <div class="cv-skills" id="cvSkills"></div>
+  <div class="cv-meta" id="cvMeta"></div>
+  <button class="cv-find-btn" id="cvFindBtn" onclick="triggerCVSearch()">
+    ✦ Find Jobs Matching My CV
+  </button>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- MAIN CONTENT -->
+
+<div class="main">
+  <!-- STATUS -->
+  <div class="ai-status" id="aiStatus">
+    <div class="spinner"></div>
+    <div class="status-msg" id="statusMsg">Searching live job boards…</div>
+    <div class="status-sub" id="statusSub"></div>
+  </div>
+
+  <!-- ERROR -->
+
+  <div class="error-box" id="errorBox">
+    <strong>Something went wrong.</strong> <span id="errorMsg"></span>
+  </div>
+
+  <!-- STATS -->
+
+  <div class="stats" id="statsRow" style="display:none;">
+    <div class="stat"><div class="stat-n" id="sTotal">0</div><div class="stat-l">Jobs found</div></div>
+    <div class="stat"><div class="stat-n" id="sHealth">0</div><div class="stat-l">Healthcare</div></div>
+    <div class="stat"><div class="stat-n" id="sNgo">0</div><div class="stat-l">NGO / INGO</div></div>
+    <div class="stat"><div class="stat-n" id="sGeneral">0</div><div class="stat-l">General</div></div>
+  </div>
+
+  <!-- FILTERS -->
+
+  <div class="filter-row" id="filterRow" style="display:none;">
+    <div class="filter-search">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7A8190" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      <input class="filter-input" id="filterQ" placeholder="Filter results…" oninput="filterJobs()"/>
+    </div>
+    <select class="fsel" id="filterSector" onchange="filterJobs()">
+      <option value="">All sectors</option>
+      <option value="health">Healthcare</option>
+      <option value="ngo">NGO / INGO</option>
+      <option value="general">General</option>
+    </select>
+    <select class="fsel" id="filterRegion" onchange="filterJobs()">
+      <option value="">All regions</option>
+      <option>Dar es Salaam</option>
+      <option>Zanzibar</option>
+      <option>Arusha</option>
+      <option>Mwanza</option>
+      <option>Dodoma</option>
+      <option>Moshi</option>
+      <option>Kigoma</option>
+      <option>Remote</option>
+    </select>
+  </div>
+
+  <!-- RESULTS -->
+
+  <div id="welcome" class="welcome">
+    <div class="welcome-icon">🇹🇿</div>
+    <div class="welcome-title">Tanzania's Free AI Job Board</div>
+    <p class="welcome-sub">Type any job, sector or location above — or upload your CV. AI finds real, live vacancies and links you directly to apply.</p>
+    <div class="welcome-cards">
+      <div class="w-card" onclick="qs('Nurse Doctor Medical Officer open jobs Tanzania')">
+        <div class="w-icon">🏥</div>
+        <div class="w-title">Healthcare</div>
+        <div class="w-sub">Nurses, doctors, pharmacists & more</div>
+      </div>
+      <div class="w-card" onclick="qs('NGO INGO UN Programme open jobs Tanzania')">
+        <div class="w-icon">🌍</div>
+        <div class="w-title">NGO / INGO</div>
+        <div class="w-sub">UN agencies, INGOs & local NGOs</div>
+      </div>
+      <div class="w-card" onclick="switchMode('cv');document.getElementById('dropZone').style.animation='pulse 0.5s'">
+        <div class="w-icon">📄</div>
+        <div class="w-title">Match My CV</div>
+        <div class="w-sub">Upload CV for personalised matches</div>
+      </div>
+    </div>
+  </div>
+  <div class="jobs-list" id="jobsList" style="display:none;"></div>
+</div>
+
+<!-- KEY MODAL -->
+
+<div class="modal-bg" id="keyModal" onclick="if(event.target===this)closeKeyModal()">
+  <div class="modal-box">
+    <div class="modal-title">Add Your Free Gemini API Key</div>
+    <div class="modal-sub">Kazi TZ uses Google's free Gemini AI to search real Tanzania jobs. You need a free API key — takes 2 minutes to get, no credit card needed.</div>
+    <div class="modal-steps">
+      <strong>Step 1.</strong> Go to <a href="https://aistudio.google.com/apikey" target="_blank">aistudio.google.com/apikey</a><br/>
+      <strong>Step 2.</strong> Sign in with your Google account (Gmail)<br/>
+      <strong>Step 3.</strong> Click <strong>"Create API Key"</strong><br/>
+      <strong>Step 4.</strong> Copy the key and paste it below
+    </div>
+    <input class="key-input" id="keyInput" type="password" placeholder="Paste your Gemini API key here (starts with AIza…)" oninput="document.getElementById('keyError').style.display='none'"/>
+    <div id="keyError" style="display:none;color:var(--red);background:var(--red-light);border:1px solid #EAB8B3;border-radius:8px;padding:8px 12px;font-size:13px;margin-bottom:8px;"></div>
+    <button class="key-save-btn" id="keySaveBtn" onclick="saveKey()">Save Key & Start Searching</button>
+    <div class="key-note">🔒 Your key is saved only in your browser — never sent anywhere else.</div>
+  </div>
+</div>
+
+<!-- TIPS MODAL -->
+
+<div class="tips-modal-bg" id="tipsModal" onclick="if(event.target===this)closeTips()">
+  <div class="tips-box">
+    <div class="tips-header">
+      <div class="tips-title">Application Tips</div>
+      <button class="tips-close" onclick="closeTips()">✕</button>
+    </div>
+    <div class="tips-body" id="tipsBody"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="foot-logo">Kazi <em>TZ</em></div>
+  <div class="foot-sub">Free AI job search for Tanzania · Powered by Google Gemini · No sign-up needed<br/>Built for Tanzanian jobseekers 🇹🇿</div>
+</footer>
+
+<script>
+// ── API KEY MANAGEMENT ────────────────────────────────────────────────────────
+const KEY_STORE = 'kazi_tz_gemini_key';
+const DEFAULT_KEY = 'AIzaSyD-aFM-A8m6lw7eNSvHOheES-p0WhzrQ38';
+
+function getKey() { return localStorage.getItem(KEY_STORE) || DEFAULT_KEY; }
+
+async function saveKey() {
+  const k = document.getElementById('keyInput').value.trim();
+  const errEl = document.getElementById('keyError');
+  const btn = document.getElementById('keySaveBtn');
+  if(!k) { errEl.textContent = 'Please paste your Gemini API key first.'; errEl.style.display='block'; return; }
+  errEl.style.display='none';
+
+  // Test the key first
+  btn.textContent = 'Testing key…';
+  btn.disabled = true;
+  try {
+    const testUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${k}`;
+    const res = await fetch(testUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ contents: [{ parts: [{ text: 'Hi' }] }], generationConfig: { maxOutputTokens: 5 } })
+    });
+    if(!res.ok) {
+      const e = await res.json().catch(()=>({}));
+      throw new Error(e?.error?.message || `Error ${res.status}`);
+    }
+    // Key works — save it
+    localStorage.setItem(KEY_STORE, k);
+    closeKeyModal();
+    document.getElementById('setupBanner').classList.add('hidden');
+    document.getElementById('aiStatus').classList.add('show');
+    document.getElementById('statusMsg').textContent = '✓ API key verified and saved! You can now search for jobs.';
+    setTimeout(()=>document.getElementById('aiStatus').classList.remove('show'), 3000);
+  } catch(err) {
+    errEl.textContent = `Key test failed: ${err.message}`;
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Save Key & Start Searching';
+    btn.disabled = false;
+  }
+}
+
+function showKeyModal() {
+  // Pre-fill with existing key if any
+  const existing = getKey();
+  if(existing) document.getElementById('keyInput').value = existing;
+  document.getElementById('keyModal').classList.add('show');
+}
+function closeKeyModal() { document.getElementById('keyModal').classList.remove('show'); }
+
+window.addEventListener('load', () => {
+  if(getKey()) document.getElementById('setupBanner').classList.add('hidden');
+});
+
+// ── MODE SWITCHING ────────────────────────────────────────────────────────────
+let cvData = null;
+
+function switchMode(mode) {
+  document.getElementById('tabSearch').classList.toggle('active', mode==='search');
+  document.getElementById('tabCV').classList.toggle('active', mode==='cv');
+  document.getElementById('searchPanel').style.display = mode==='search' ? '' : 'none';
+  document.getElementById('cvPanel').classList.toggle('visible', mode==='cv');
+  clearResults();
+}
+
+function clearResults() {
+  document.getElementById('welcome').style.display = 'block';
+  document.getElementById('jobsList').style.display = 'none';
+  document.getElementById('statsRow').style.display = 'none';
+  document.getElementById('filterRow').style.display = 'none';
+  document.getElementById('errorBox').style.display = 'none';
+}
+
+// ── CV HANDLING ───────────────────────────────────────────────────────────────
+function handleCV(file) {
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async e => await parseCV(e.target.result||'', file.name);
+  reader.readAsText(file);
+}
+
+// Drag & drop
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e => { e.preventDefault(); dz.classList.add('drag'); });
+dz.addEventListener('dragleave', () => dz.classList.remove('drag'));
+dz.addEventListener('drop', e => {
+  e.preventDefault(); dz.classList.remove('drag');
+  const f = e.dataTransfer.files[0]; if(f) handleCV(f);
+});
+
+async function parseCV(text, name) {
+  if(!checkKey()) return;
+  document.getElementById('dropZone').innerHTML = `
+    <div class="spinner" style="margin:0 auto 12px;"></div>
+    <div style="font-size:14px;color:var(--ink2);">Reading your CV…</div>
+    <div style="font-size:12px;color:var(--ink3);margin-top:4px;">Extracting every title, skill and qualification</div>`;
+
+  try {
+    const prompt = `You are a CV parser. Extract a complete structured profile from this CV. Return ONLY valid JSON — no markdown, no explanation, just raw JSON.
+
+Required JSON structure:
+{
+  "name": "Full name or 'Professional' if not clear",
+  "headline": "Most recent or primary job title",
+  "yearsExp": "e.g. 3 years or Entry level",
+  "education": "Highest qualification e.g. BSc Nursing, UDSM",
+  "topSkills": ["extract up to 12 specific skills mentioned anywhere in the CV"],
+  "jobTitles": ["every single job title held — list ALL of them, most recent first"],
+  "sectors": ["sectors worked in e.g. Healthcare, NGO, Finance, Technology"],
+  "languages": ["languages spoken"],
+  "achievements": ["1-2 notable achievements if mentioned"],
+  "searchQuery": "A rich specific search string for Tanzania jobs using their ACTUAL job titles and skills, e.g. 'Registered Nurse ICU NRC hospital clinical Tanzania 2025'"
+}
+
+Be thorough. Extract EVERY job title and skill. This data is used to match them to real jobs.
+
+CV content:
+Filename: ${name}
+${text.slice(0, 9000)}`;
+
+    const result = await callGemini(prompt, false);
+    const m = result.match(/\{[\s\S]*\}/);
+    if(!m) throw new Error('Could not read CV structure');
+    cvData = JSON.parse(m[0]);
+    showCVProfile(cvData);
+  } catch(err) {
+    resetCV();
+    showError(`CV reading failed: ${err.message}. Try saving your CV as a .txt file and uploading again.`);
+  }
+}
+
+function showCVProfile(p) {
+  document.getElementById('dropZone').style.display = 'none';
+  document.getElementById('cvName').textContent = p.name || 'Your Profile';
+  document.getElementById('cvHeadline').textContent = [p.headline, p.yearsExp, p.education].filter(Boolean).join(' · ');
+  document.getElementById('cvSkills').innerHTML = (p.topSkills||[]).map(s=>`<span class="cv-skill">${s}</span>`).join('');
+  document.getElementById('cvMeta').innerHTML = [
+    p.jobTitles?.length ? '💼 Titles: '+p.jobTitles.slice(0,5).join(', ') : '',
+    p.sectors?.length ? '🏷️ Sectors: '+p.sectors.join(', ') : '',
+    p.languages?.length ? '🗣️ Languages: '+p.languages.join(', ') : ''
+  ].filter(Boolean).join('<br/>');
+  document.getElementById('cvProfileCard').classList.add('show');
+}
+
+function resetCV() {
+  cvData = null;
+  document.getElementById('cvProfileCard').classList.remove('show');
+  document.getElementById('dropZone').style.display = '';
+  document.getElementById('dropZone').classList.remove('drag');
+  document.getElementById('dropZone').innerHTML = `
+    <div class="drop-icon">📄</div>
+    <div class="drop-title">Upload your CV</div>
+    <div class="drop-sub">AI reads every job title, skill and experience in your CV, then finds real Tanzania jobs that match your exact background</div>
+    <div class="drop-formats">PDF · DOC · DOCX · TXT &nbsp;·&nbsp; Drag &amp; drop or click to browse</div>
+    <label class="upload-label" onclick="event.stopPropagation()">
+      Choose CV file
+      <input type="file" id="cvInput" accept=".pdf,.doc,.docx,.txt" style="display:none;" onchange="handleCV(this.files[0])"/>
+    </label>`;
+}
+
+async function triggerCVSearch() {
+  if(!cvData || !checkKey()) return;
+  document.getElementById('cvFindBtn').disabled = true;
+  const q = cvData.searchQuery || `${(cvData.jobTitles||[]).slice(0,4).join(' ')} ${(cvData.topSkills||[]).slice(0,5).join(' ')} Tanzania 2025`;
+  await runSearch(q, cvData);
+}
+
+// ── KEYWORD SEARCH ────────────────────────────────────────────────────────────
+function qs(q) { document.getElementById('mainSearch').value = q; triggerSearch(); }
+
+async function triggerSearch() {
+  const q = document.getElementById('mainSearch').value.trim();
+  if(!q) { document.getElementById('mainSearch').focus(); return; }
+  if(!checkKey()) return;
+  await runSearch(q, null);
+}
+
+// ── KEY CHECK ────────────────────────────────────────────────────────────────
+function checkKey() {
+  if(!getKey()) { showKeyModal(); return false; }
+  return true;
+}
+
+// ── GEMINI API CALL ───────────────────────────────────────────────────────────
+async function callGemini(prompt, useSearch) {
+  const key = getKey();
+  const model = useSearch ? 'gemini-2.0-flash' : 'gemini-2.0-flash';
+  const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`;
+
+  const tools = useSearch ? [{ googleSearch: {} }] : [];
+
+  const body = {
+    contents: [{ parts: [{ text: prompt }] }],
+    generationConfig: { temperature: 0.3, maxOutputTokens: 6000 }
+  };
+  if(useSearch) body.tools = tools;
+
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+
+  if(!res.ok) {
+    const err = await res.json().catch(()=>({}));
+    const msg = err?.error?.message || `API error ${res.status}`;
+    if(res.status === 400 && msg.includes('API_KEY')) throw new Error('Invalid API key. Please check your key in settings.');
+    if(res.status === 429) throw new Error('Too many requests. Please wait a moment and try again.');
+    throw new Error(msg);
+  }
+
+  const data = await res.json();
+  return data?.candidates?.[0]?.content?.parts?.[0]?.text || '';
+}
+
+// ── CORE SEARCH ───────────────────────────────────────────────────────────────
+async function runSearch(query, profile) {
+  clearResults();
+  document.getElementById('welcome').style.display = 'none';
+  document.getElementById('aiStatus').classList.add('show');
+
+  const isCV = !!profile;
+  const msgs = isCV
+    ? ['Reading your career profile…','Matching your experience to live jobs…','Scanning BrighterMonday, ReliefWeb, LinkedIn…','Ranking by best fit for your CV…']
+    : ['Searching live job boards…','Scanning organisation websites…','Extracting job details and direct links…','Categorising results…'];
+  let mi = 0;
+  document.getElementById('statusMsg').textContent = msgs[0];
+  document.getElementById('statusSub').textContent = isCV ? `Matching: ${profile.headline||'your profile'}` : `Looking for: "${query}"`;
+  const t = setInterval(() => { mi=(mi+1)%msgs.length; document.getElementById('statusMsg').textContent=msgs[mi]; }, 2000);
+
+  const cvContext = isCV ? `
+CANDIDATE PROFILE FROM THEIR CV:
+- Name: ${profile.name}
+- Current/Target Role: ${profile.headline}
+- Experience: ${profile.yearsExp}
+- Education: ${profile.education}
+- All Job Titles Held: ${(profile.jobTitles||[]).join(', ')}
+- Skills: ${(profile.topSkills||[]).join(', ')}
+- Sectors: ${(profile.sectors||[]).join(', ')}
+- Languages: ${(profile.languages||[]).join(', ')}
+- Key Achievements: ${(profile.achievements||[]).join('; ')}
+
+Find Tanzania jobs this specific person is genuinely qualified for based on their titles, skills, sector and education. Include 1-2 stretch roles one level above. For each job add matchScore (0-100) and matchReason (one sentence explaining why it suits their specific background).` : '';
+
+  const today = new Date().toISOString().split('T')[0];
+  const prompt = `You are a Tanzania job search assistant with access to Google Search. Today's date is ${today}. Search for REAL, CURRENTLY OPEN job vacancies in Tanzania that have NOT expired.
+
+CRITICAL DATE RULES:
+- Only return jobs whose application deadline is TODAY (${today}) or in the FUTURE.
+- If a job has no deadline shown, only include it if it was posted within the last 30 days.
+- Do NOT return any job that has already closed or expired.
+- Do NOT return jobs posted more than 60 days ago unless they explicitly show a future deadline.
+${cvContext}
+
+Search these platforms for live Tanzania job postings:
+- brightermonday.co.tz (largest Tanzania job board)
+- reliefweb.int (NGO/humanitarian)
+- linkedin.com/jobs
+- devex.com (development sector)
+- zoom.co.tz (Tanzania jobs)
+- utumishi.go.tz (government jobs)
+- careers.un.org (UN jobs)
+- Direct organisation career pages
+
+Search for: "${query}"
+
+For each real job found, extract:
+- title: exact job title
+- org: organisation name
+- description: 2-3 sentence summary of the role and key requirements
+- url: THE DIRECT URL to the actual job advert page — the exact page where a candidate clicks Apply (NOT a homepage, NOT search results — the actual posting URL)
+- region: Tanzania city or "Remote"
+- deadline: application deadline if shown (MUST be today or future — reject if past)
+- salary: salary/grade if mentioned
+- level: Entry / Mid / Senior
+- source: which job board or website${isCV ? '\n- matchScore: integer 0-100\n- matchReason: one sentence why this fits this candidate specifically' : ''}
+
+CRITICAL:
+1. url must be the DIRECT job posting page. This is the single most important field.
+2. Tanzania jobs only.
+3. Currently open and NOT expired — this is mandatory. Today is ${today}.
+4. Return 8-15 jobs.
+5. Return ONLY a raw JSON array. No markdown fences. No explanation. Start with [ and end with ].`;
+
+  try {
+    const text = await callGemini(prompt, true);
+    clearInterval(t);
+
+    // Extract JSON array robustly
+    let jobs;
+    const clean = text.replace(/```json|```/g,'').trim();
+    const m = clean.match(/\[[\s\S]*\]/);
+    if(!m) throw new Error('No job listings found in response. Please try again.');
+    jobs = JSON.parse(m[0]);
+    if(!Array.isArray(jobs)||jobs.length===0) throw new Error('No jobs found for this search — try different keywords.');
+    if(isCV) jobs.sort((a,b)=>(b.matchScore||0)-(a.matchScore||0));
+    renderJobs(jobs, isCV);
+  } catch(err) {
+    clearInterval(t);
+    showError(err.message);
+    document.getElementById('welcome').style.display = 'block';
+  } finally {
+    document.getElementById('aiStatus').classList.remove('show');
+    document.getElementById('searchBtn').disabled = false;
+    document.getElementById('searchIcon').textContent = '✦';
+    const fb = document.getElementById('cvFindBtn');
+    if(fb) fb.disabled = false;
+  }
+}
+
+// ── SECTOR DETECTION ──────────────────────────────────────────────────────────
+function getSector(title, org, desc) {
+  const t = `${title} ${org} ${desc}`.toLowerCase();
+  const h = ['nurse','doctor','medical','clinical','hospital','pharmacy','pharmacist','health','laboratory','lab tech','radiograph','nutrition','paediatri','physician','midwif','dentist','surgeon','anaesth','icu','ward','patient care'];
+  const n = ['ngo','ingo','unicef','unhcr','wfp','who','undp','oxfam','save the children','amref','jhpiego','usaid','pepfar','programme officer','project officer','humanitarian','livelihoods','protection','wash','community development','grant management','m&e'];
+  if(n.some(w=>t.includes(w))) return 'ngo';
+  if(h.some(w=>t.includes(w))) return 'health';
+  return 'general';
+}
+
+function badgeHTML(sector) {
+  if(sector==='health') return '<span class="badge b-health">Healthcare</span>';
+  if(sector==='ngo') return '<span class="badge b-ngo">NGO / INGO</span>';
+  return '<span class="badge b-general">General</span>';
+}
+
+function domain(url) { try { return new URL(url).hostname.replace('www.',''); } catch { return ''; } }
+
+// ── RENDER JOBS ───────────────────────────────────────────────────────────────
+function renderJobs(jobs, isCV) {
+  jobs.forEach(j => j._sector = getSector(j.title, j.org, j.description||''));
+
+  const list = document.getElementById('jobsList');
+  list.innerHTML = jobs.map(j => {
+    const s = j._sector;
+    const score = j.matchScore;
+    const mc = score>=70?'#1A7A4A':score>=45?'#B8860B':'#7A8190';
+    const ml = score>=70?'Strong match':score>=45?'Good match':'Partial match';
+    return `<div class="job-card ${isCV&&score>=70?'strong-match':''}" data-sector="${s}" data-region="${j.region||''}">
+      <div class="job-top">
+        <div>
+          <div class="job-title">${j.title}</div>
+          <div class="job-org">${j.org}</div>
+        </div>
+        <div class="badges">
+          ${badgeHTML(s)}
+          ${isCV&&score?`<span class="badge" style="background:${score>=70?'var(--green-light)':score>=45?'var(--gold-light)':'var(--paper2)'};color:${score>=70?'var(--green)':score>=45?'var(--gold)':'var(--ink3)'};border:1px solid ${score>=70?'var(--green-mid)':score>=45?'#DEC97A':'var(--paper3)'};">${score}%</span>`:''}
+          ${j.region?`<span class="badge" style="background:var(--paper);color:var(--ink2);border:1px solid var(--paper3);">📍 ${j.region}</span>`:''}
+        </div>
+      </div>
+      ${isCV&&score?`<div class="match-bar-wrap"><div class="match-bar"><div class="match-fill" style="width:${score}%;background:${mc};"></div></div><div class="match-info"><span>${ml}</span><span>${score}% CV match</span></div></div>`:''}
+      ${isCV&&j.matchReason?`<div class="match-reason">✦ ${j.matchReason}</div>`:''}
+      <div class="meta-tags">
+        ${j.deadline?`<span class="meta-tag">⏰ ${j.deadline}</span>`:''}
+        ${j.salary?`<span class="meta-tag">💰 ${j.salary}</span>`:''}
+        ${j.level?`<span class="meta-tag">${j.level}</span>`:''}
+        ${j.source?`<span class="meta-tag">📋 ${j.source}</span>`:''}
+      </div>
+      <div class="job-desc">${j.description||''}</div>
+      <div class="card-actions">
+        <a class="apply-btn" href="${j.url}" target="_blank" rel="noopener">Apply Now →</a>
+        <button class="tips-btn" onclick="showTips('${s}')">Cover letter tips</button>
+        ${j.url?`<span class="src-label">🔗 ${domain(j.url)}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+
+  list.style.display = 'flex';
+  document.getElementById('sTotal').textContent = jobs.length;
+  document.getElementById('sHealth').textContent = jobs.filter(j=>j._sector==='health').length;
+  document.getElementById('sNgo').textContent = jobs.filter(j=>j._sector==='ngo').length;
+  document.getElementById('sGeneral').textContent = jobs.filter(j=>j._sector==='general').length;
+  document.getElementById('statsRow').style.display = 'grid';
+  document.getElementById('filterRow').style.display = 'flex';
+  document.getElementById('filterQ').value = '';
+  document.getElementById('filterSector').value = '';
+  document.getElementById('filterRegion').value = '';
+  document.getElementById('statsRow').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ── FILTER ────────────────────────────────────────────────────────────────────
+function filterJobs() {
+  const q = document.getElementById('filterQ').value.toLowerCase();
+  const s = document.getElementById('filterSector').value;
+  const r = document.getElementById('filterRegion').value;
+  let v = 0;
+  document.querySelectorAll('#jobsList .job-card').forEach(c => {
+    const show = (!q||c.textContent.toLowerCase().includes(q))&&(!s||c.dataset.sector===s)&&(!r||c.dataset.region.includes(r));
+    c.style.display = show?'':'none';
+    if(show) v++;
+  });
+  document.getElementById('sTotal').textContent = v;
+}
+
+// ── TIPS ──────────────────────────────────────────────────────────────────────
+const TIPS = {
+  health: `COVER LETTER TIPS — HEALTHCARE ROLES
+
+1. Open with your qualification + years + setting:
+   "Registered Nurse with 4 years ICU experience at Muhimbili National Hospital."
+
+2. Quote one specific clinical outcome with numbers:
+   "Reduced post-operative infection rates by 18% through improved wound care protocols."
+
+3. State your professional licence number and expiry date early — hiring managers check this before reading further.
+
+4. Mirror the exact job title from the advert — many systems filter by keyword before a human sees your application.
+
+5. Close by referencing the organisation's specific programmes or values, not just the role.
+
+QUICK CHECKLIST:
+✓ One page maximum
+✓ Include NRC/professional licence details
+✓ Quantify your clinical impact
+✓ Use medical terminology from the job advert
+✓ Proofread — especially drug names and clinical terms`,
+
+  ngo: `COVER LETTER TIPS — NGO / INGO ROLES
+
+1. Lead with donor context you know: USAID, PEPFAR, EU, FCDO — NGOs hire for institutional knowledge, not just skills.
+
+2. Quantify your programme reach:
+   "Managed a $2.3M USAID grant reaching 45,000 beneficiaries across 6 regions."
+
+3. Name M&E tools you've used: DHIS2, KoBoToolbox, Stata, SPSS — these are heavily screened at shortlisting.
+
+4. Reference the organisation's specific current country strategy or a named project in your opening paragraph.
+
+5. Explain your mission alignment explicitly — NGO recruiters look for this beyond competence.
+
+QUICK CHECKLIST:
+✓ One page — UN/INGO recruiters review dozens of applications daily
+✓ Name all donor acronyms you've worked with
+✓ Quantify beneficiaries, budget and geographic reach
+✓ Show you've researched the specific organisation`,
+
+  general: `COVER LETTER TIPS — GENERAL / CORPORATE ROLES
+
+1. Use the company's own language from their website or advert in your first paragraph — shows you've done research.
+
+2. Replace vague claims with evidence:
+   Instead of "good communicator" → "presented quarterly results to a board of 12 directors."
+
+3. Reference one recent company news item (expansion, award, new product) to show genuine interest.
+
+4. State your availability and notice period clearly — this removes friction at the shortlisting stage.
+
+5. Keep to 3-4 short paragraphs and proofread carefully — especially the company and product names.
+
+QUICK CHECKLIST:
+✓ Address the hiring manager by name if you can find it
+✓ Match the tone: formal for banks, energetic for tech startups
+✓ Professional email address
+✓ Consistent formatting between your CV and cover letter`
+};
+
+function showTips(sector) {
+  document.getElementById('tipsBody').textContent = TIPS[sector]||TIPS.general;
+  document.getElementById('tipsModal').classList.add('show');
+}
+function closeTips() { document.getElementById('tipsModal').classList.remove('show'); }
+
+// ── HELPERS ───────────────────────────────────────────────────────────────────
+function showError(msg) {
+  document.getElementById('errorBox').style.display = 'block';
+  document.getElementById('errorMsg').textContent = msg;
+}
+
+// Enter key search
+document.getElementById('mainSearch').addEventListener('keydown', e => { if(e.key==='Enter') triggerSearch(); });
+</script>
+
+</body>
+</html>
